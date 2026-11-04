@@ -13,10 +13,16 @@ public struct BenefitSummary {
 
 public struct DayStripItem: Identifiable {
     public var id: Int
+    public let weekdayLabel: String
     public let dayNumber: String
     public let isToday: Bool
     public let isWorkDay: Bool
+    public let isRestDay: Bool
+    public let isPast: Bool
+    public let isFuture: Bool
     public let isPastOrToday: Bool
+    public let restBadgeLabel: String
+    public let todayBadgeLabel: String
 }
 
 public struct NextRestInfo {
@@ -24,6 +30,7 @@ public struct NextRestInfo {
     public let countdownSeconds: TimeInterval
     public let startDateFormatted: String
     public let dayStrips: [DayStripItem]
+    public let isRestingNow: Bool
 }
 
 // MARK: - Earnings Calculator
@@ -409,18 +416,51 @@ struct EarningsCalculator {
         let cal = Calendar.current
         let lang = settings.appLanguage
 
+        // 1. Natural week: Monday to Sunday (ISO standard week)
+        let weekday = cal.component(.weekday, from: date) // 1=Sun, 2=Mon... 7=Sat
+        let diffToMonday = (weekday == 1) ? -6 : (2 - weekday)
+        let monday = cal.date(byAdding: .day, value: diffToMonday, to: cal.startOfDay(for: date)) ?? cal.startOfDay(for: date)
+
+        let weekdayNames: [AppLanguage: [String]] = [
+            .zh: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+            .fr: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+            .en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            .de: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+            .ja: ["月", "火", "水", "木", "金", "土", "日"]
+        ]
+        let restBadges: [AppLanguage: (rest: String, today: String)] = [
+            .zh: ("休", "今"),
+            .fr: ("Repos", "Auj."),
+            .en: ("Off", "Now"),
+            .de: ("Frei", "Heute"),
+            .ja: ("休", "今日")
+        ]
+
         var strips: [DayStripItem] = []
         for i in 0..<7 {
-            if let d = cal.date(byAdding: .day, value: i, to: date) {
+            if let d = cal.date(byAdding: .day, value: i, to: monday) {
                 let dayNum = "\(cal.component(.day, from: d))"
-                let weekday = cal.component(.weekday, from: d)
-                let isWork = settings.workDays.contains(weekday)
+                let dWeekday = cal.component(.weekday, from: d)
+                let isWork = settings.workDays.contains(dWeekday)
+                let isToday = cal.isDate(d, inSameDayAs: date)
+                let isPast = d < cal.startOfDay(for: date)
+                let isFuture = d > cal.startOfDay(for: date)
+                let wName = weekdayNames[lang]?[i] ?? "D\(i)"
+                let rBadge = restBadges[lang]?.rest ?? "Off"
+                let tBadge = restBadges[lang]?.today ?? "Now"
+
                 strips.append(DayStripItem(
                     id: i,
+                    weekdayLabel: wName,
                     dayNumber: dayNum,
-                    isToday: i == 0,
+                    isToday: isToday,
                     isWorkDay: isWork,
-                    isPastOrToday: i == 0
+                    isRestDay: !isWork,
+                    isPast: isPast,
+                    isFuture: isFuture,
+                    isPastOrToday: isPast || isToday,
+                    restBadgeLabel: rBadge,
+                    todayBadgeLabel: tBadge
                 ))
             }
         }
@@ -430,9 +470,9 @@ struct EarningsCalculator {
 
         for dayOffset in 0...14 {
             guard let d = cal.date(byAdding: .day, value: dayOffset, to: date) else { continue }
-            let weekday = cal.component(.weekday, from: d)
+            let dWeekday = cal.component(.weekday, from: d)
 
-            if !settings.workDays.contains(weekday) {
+            if !settings.workDays.contains(dWeekday) {
                 foundOffset = dayOffset
                 for nextOffset in (dayOffset + 1)...(dayOffset + 14) {
                     guard let nd = cal.date(byAdding: .day, value: nextOffset, to: date) else { break }
@@ -448,29 +488,36 @@ struct EarningsCalculator {
         }
 
         let offset = foundOffset ?? 1
+        let isRestingNow = (foundOffset == 0)
+
         guard let restStartDate = cal.date(byAdding: .day, value: offset, to: date) else {
-            return NextRestInfo(badgeName: L10n.weekendBadge(lang), countdownSeconds: 0, startDateFormatted: "", dayStrips: strips)
+            return NextRestInfo(badgeName: L10n.weekendBadge(lang), countdownSeconds: 0, startDateFormatted: "", dayStrips: strips, isRestingNow: isRestingNow)
         }
 
-        let weekday = cal.component(.weekday, from: restStartDate)
-        let isWeekend = (weekday == 1 || weekday == 7)
+        let restStartWeekday = cal.component(.weekday, from: restStartDate)
+        let isWeekend = (restStartWeekday == 1 || restStartWeekday == 7)
         let badge = isWeekend ? L10n.weekendBadge(lang) : L10n.holidayBadge(lang)
 
         let month = cal.component(.month, from: restStartDate)
         let day = cal.component(.day, from: restStartDate)
 
         let dateFormatted: String
-        switch lang {
-        case .zh:
-            dateFormatted = "\(month)/\(day) 起 · 共 \(restLength) 天"
-        case .ja:
-            dateFormatted = "\(month)/\(day) から · 計 \(restLength) 日"
-        case .fr:
-            dateFormatted = "Dès le \(day)/\(month) · \(restLength) jours"
-        case .de:
-            dateFormatted = "Ab \(day).\(month). · \(restLength) Tage"
-        case .en:
-            dateFormatted = "From \(month)/\(day) · \(restLength) days"
+        if isRestingNow {
+            switch lang {
+            case .zh: dateFormatted = "正在享受中 · 共 \(restLength) 天"
+            case .ja: dateFormatted = "休暇満喫中 · 計 \(restLength) 日間"
+            case .fr: dateFormatted = "En plein repos · \(restLength) jours"
+            case .de: dateFormatted = "Aktuell frei · \(restLength) Tage"
+            case .en: dateFormatted = "On break · \(restLength) days"
+            }
+        } else {
+            switch lang {
+            case .zh: dateFormatted = "\(month)/\(day) 起 · 共 \(restLength) 天"
+            case .ja: dateFormatted = "\(month)/\(day) から · 計 \(restLength) 日"
+            case .fr: dateFormatted = "Dès le \(day)/\(month) · \(restLength) jours"
+            case .de: dateFormatted = "Ab \(day).\(month). · \(restLength) Tage"
+            case .en: dateFormatted = "From \(month)/\(day) · \(restLength) days"
+            }
         }
 
         var targetDate: Date
@@ -493,7 +540,8 @@ struct EarningsCalculator {
             badgeName: badge,
             countdownSeconds: countdown,
             startDateFormatted: dateFormatted,
-            dayStrips: strips
+            dayStrips: strips,
+            isRestingNow: isRestingNow
         )
     }
 

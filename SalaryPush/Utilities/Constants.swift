@@ -175,6 +175,16 @@ public enum L10n {
         }
     }
 
+    public static func restingNow(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "享受周末中"
+        case .fr: return "Bon week-end !"
+        case .en: return "Enjoying weekend!"
+        case .de: return "Schönes Wochenende!"
+        case .ja: return "週末を満喫中！"
+        }
+    }
+
     public static func workTenure(_ lang: AppLanguage) -> String {
         switch lang {
         case .zh: return "工作年限"
