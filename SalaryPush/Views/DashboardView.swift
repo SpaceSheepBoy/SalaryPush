@@ -138,7 +138,7 @@ struct DashboardView: View {
                     )
 
                     // 7. Dedicated Custom Wishlist Milestone & Payday Card
-                    let wishlist = calculator.customWishlistGoal(todayEarned: calculator.todayEarnings(at: currentDate))
+                    let wishlist = calculator.customWishlistGoal(todayEarned: calculator.todayEarnings(at: currentDate), exchangeRateService: exchangeRateService)
                     let payday = calculator.paydayCountdown(now: currentDate)
 
                     VStack(spacing: 5) {

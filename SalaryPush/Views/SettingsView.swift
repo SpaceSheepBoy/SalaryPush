@@ -209,9 +209,27 @@ struct SettingsView: View {
                         TextField("金额", value: $settings.customWishlistPrice, format: .number)
                             .textFieldStyle(.roundedBorder)
 
-                        Text(settings.displayCurrency)
-                            .foregroundColor(grayTeal)
-                            .font(.system(size: 11))
+                        Picker("", selection: $settings.customWishlistCurrency) {
+                            ForEach(SupportedCurrencies.all) { c in
+                                Text("\(c.symbol) \(c.id)").tag(c.id)
+                            }
+                        }
+                        .labelsHidden()
+                        .pickerStyle(.menu)
+                        .frame(width: 90)
+                    }
+
+                    if settings.customWishlistCurrency != settings.displayCurrency {
+                        HStack {
+                            Text("💡 折合显示币种 (\(settings.displayCurrency)):")
+                                .font(.system(size: 10))
+                                .foregroundColor(grayTeal)
+                            Spacer()
+                            let convRate = (settings.customWishlistCurrency == settings.salaryCurrency ? calc.exchangeRate : 1.0)
+                            Text("\(SupportedCurrencies.symbol(for: settings.displayCurrency))\(CurrencyFormatter.format(value: settings.customWishlistPrice * convRate, currency: settings.displayCurrency, decimals: 2)) \(settings.displayCurrency)")
+                                .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                                .foregroundColor(Color(red: 0.18, green: 0.90, blue: 0.61))
+                        }
                     }
                 }
 

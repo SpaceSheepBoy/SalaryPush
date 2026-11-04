@@ -161,6 +161,7 @@ final class SalarySettings: ObservableObject {
     @AppStorage("paydayDay") var paydayDay: Int = 0 // 0 = 月底最后一天 (默认)
     @AppStorage("customWishlistName") var customWishlistName: String = "PS5 游戏机 (光驱版)"
     @AppStorage("customWishlistPrice") var customWishlistPrice: Double = 3599.0
+    @AppStorage("customWishlistCurrency") var customWishlistCurrency: String = "CNY"
     @AppStorage("hasCompletedSetup") var hasCompletedSetup: Bool = false
 
     // MARK: - Auto-fill Country Defaults (Still allows manual modifications)
@@ -178,6 +179,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .zh
             customWishlistName = "PS5 游戏机 (光驱版)"
             customWishlistPrice = 3599.0
+            customWishlistCurrency = "CNY"
         case .france:
             salaryAmount = 2500
             salaryCurrency = "EUR"
@@ -189,6 +191,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .fr
             customWishlistName = "Console PS5"
             customWishlistPrice = 549.0
+            customWishlistCurrency = "EUR"
         case .germany:
             salaryAmount = 3500
             salaryCurrency = "EUR"
@@ -199,6 +202,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .de
             customWishlistName = "PS5 Konsole"
             customWishlistPrice = 549.0
+            customWishlistCurrency = "EUR"
         case .uk:
             salaryAmount = 2900
             salaryCurrency = "GBP"
@@ -209,6 +213,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .en
             customWishlistName = "PS5 Console"
             customWishlistPrice = 479.0
+            customWishlistCurrency = "GBP"
         case .japan:
             salaryAmount = 350000
             salaryCurrency = "JPY"
@@ -219,6 +224,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .ja
             customWishlistName = "PS5 本体"
             customWishlistPrice = 79980.0
+            customWishlistCurrency = "JPY"
         case .us:
             salaryAmount = 4500
             salaryCurrency = "USD"
@@ -229,6 +235,7 @@ final class SalarySettings: ObservableObject {
             appLanguage = .en
             customWishlistName = "PS5 Console"
             customWishlistPrice = 499.0
+            customWishlistCurrency = "USD"
         case .custom:
             break
         }

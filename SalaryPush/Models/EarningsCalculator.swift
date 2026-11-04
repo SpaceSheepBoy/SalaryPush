@@ -522,20 +522,40 @@ struct EarningsCalculator {
         public let name: String
         public let price: Double
         public let formattedPrice: String
+        public let rawPrice: Double
+        public let rawCurrency: String
         public let todayEarned: Double
         public let progressPercent: Double
     }
 
-    public func customWishlistGoal(todayEarned: Double) -> CustomWishlistInfo {
+    public func customWishlistGoal(todayEarned: Double, exchangeRateService: ExchangeRateService? = nil) -> CustomWishlistInfo {
         let name = settings.customWishlistName.isEmpty ? "我的心愿" : settings.customWishlistName
-        let price = max(1.0, settings.customWishlistPrice)
-        let progress = min(100.0, (todayEarned / price) * 100.0)
-        let formattedPrice = CurrencyFormatter.format(value: price, currency: settings.displayCurrency, decimals: 2)
+        let rawPrice = max(1.0, settings.customWishlistPrice)
+        let wishlistCurr = settings.customWishlistCurrency.isEmpty ? settings.displayCurrency : settings.customWishlistCurrency
+        let displayCurr = settings.displayCurrency
+
+        let rate: Double
+        if wishlistCurr == displayCurr {
+            rate = 1.0
+        } else if let svc = exchangeRateService {
+            rate = svc.rate(from: wishlistCurr, to: displayCurr)
+        } else if wishlistCurr == settings.salaryCurrency {
+            rate = exchangeRate
+        } else {
+            rate = 1.0
+        }
+
+        let convertedPrice = rawPrice * rate
+        let progress = min(100.0, (todayEarned / max(0.01, convertedPrice)) * 100.0)
+        let formattedBase = CurrencyFormatter.format(value: convertedPrice, currency: displayCurr, decimals: 2)
+        let formattedPrice = wishlistCurr != displayCurr ? "\(formattedBase) (\(CurrencyFormatter.format(value: rawPrice, currency: wishlistCurr, decimals: 0)) \(SupportedCurrencies.symbol(for: wishlistCurr)))" : formattedBase
 
         return CustomWishlistInfo(
             name: name,
-            price: price,
+            price: convertedPrice,
             formattedPrice: formattedPrice,
+            rawPrice: rawPrice,
+            rawCurrency: wishlistCurr,
             todayEarned: todayEarned,
             progressPercent: progress
         )
