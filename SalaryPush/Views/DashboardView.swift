@@ -34,7 +34,7 @@ struct DashboardView: View {
                     .font(.system(size: settings.isMiniMode ? 11 : 12, weight: .medium))
                     .foregroundColor(grayTeal)
 
-                Text("SalaryPush")
+                Text("WorkFuel · 摸鱼计算")
                     .font(.system(size: 9, weight: .regular))
                     .foregroundColor(grayTeal.opacity(0.6))
 
