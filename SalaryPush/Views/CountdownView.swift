@@ -40,7 +40,8 @@ struct CountdownView: View {
                         .foregroundColor(.white)
                         .monospacedDigit()
 
-                    Text(language == .zh ? "天" : (language == .fr ? "j " : "d "))
+                    let dayUnit = language == .zh ? "天" : (language == .fr ? "j " : (language == .de ? "T " : (language == .ja ? "日" : "d ")))
+                    Text(dayUnit)
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                 }

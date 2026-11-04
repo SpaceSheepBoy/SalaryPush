@@ -83,6 +83,10 @@ struct EarningsCalculator {
         settings.monthlySalary * exchangeRate
     }
 
+    var annualEarnings: Double {
+        settings.annualSalary * exchangeRate
+    }
+
     // MARK: - Today's Earnings (Strictly 2 Decimals when Formatted)
 
     func todayEarnings(at date: Date) -> Double {

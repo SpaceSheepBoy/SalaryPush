@@ -241,6 +241,13 @@ struct SettingsView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .onChange(of: settings.salaryInputMode) { oldMode, newMode in
+                        if oldMode == .monthly && newMode == .annual {
+                            settings.salaryAmount = (settings.salaryAmount * 12.0).rounded()
+                        } else if oldMode == .annual && newMode == .monthly {
+                            settings.salaryAmount = (settings.salaryAmount / 12.0).rounded()
+                        }
+                    }
 
                     HStack {
                         Text(settings.salaryInputMode == .monthly ? "月薪" : "年薪")

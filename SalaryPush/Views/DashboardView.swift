@@ -82,12 +82,12 @@ struct DashboardView: View {
                 )
 
                 if !settings.isMiniMode {
-                    // 2. Stats row: per-second, hourly, daily, month-to-date
+                    // 2. Stats row: per-second, hourly, daily, annual
                     StatsRowView(
                         perSecond: calculator.perSecondEarnings,
                         hourly: calculator.hourlyEarnings,
                         daily: calculator.dailyEarnings,
-                        monthToDate: monthInfo.totalEarned,
+                        annual: calculator.annualEarnings,
                         currencySymbol: settings.displayCurrencySymbol,
                         currencyCode: settings.displayCurrency,
                         language: settings.appLanguage
@@ -176,13 +176,14 @@ struct DashboardView: View {
                         .frame(height: 5)
 
                         HStack {
-                            Text("今日贡献 \(formatBenefitAmount(wishlist.todayEarned)) / 目标 \(wishlist.formattedPrice)")
+                            Text("\(L10n.todayContribution(settings.appLanguage)) \(formatBenefitAmount(wishlist.todayEarned)) / \(L10n.targetLabel(settings.appLanguage)) \(wishlist.formattedPrice)")
                                 .font(.system(size: 9))
                                 .foregroundColor(grayTeal)
 
                             Spacer()
 
-                            Text("💰 发薪日: \(payday.displayLabel) (余 \(payday.days)天)")
+                            let daysSuffix = settings.appLanguage == .zh ? "天" : (settings.appLanguage == .fr ? "j" : (settings.appLanguage == .de ? "T" : (settings.appLanguage == .ja ? "日" : "d")))
+                            Text("💰 \(L10n.paydayLabel(settings.appLanguage)): \(payday.displayLabel) (\(payday.days) \(daysSuffix))")
                                 .font(.system(size: 9, weight: .medium))
                                 .foregroundColor(Color(red: 0.95, green: 0.77, blue: 0.25))
                         }

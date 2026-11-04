@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// Displays per-second, hourly, daily, and month-to-date earnings in 4 compact clean columns
+/// Displays per-second, hourly, daily, and annual earnings in 4 compact clean columns
 struct StatsRowView: View {
     let perSecond: Double
     let hourly: Double
     let daily: Double
+    var annual: Double = 0.0
     var monthToDate: Double = 0.0
     let currencySymbol: String
     let currencyCode: String
@@ -63,16 +64,16 @@ struct StatsRowView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            // Column 4: 本月已赚
+            // Column 4: 年薪
             VStack(alignment: .leading, spacing: 3) {
-                Text(L10n.monthEarned(language))
+                Text(L10n.annualRate(language))
                     .font(.system(size: 9.5, weight: .regular))
-                    .foregroundColor(mintColor)
+                    .foregroundColor(grayTeal)
                     .lineLimit(1)
 
-                Text(formatTwoDecimals(monthToDate))
+                Text(formatTwoDecimals(annual, decimals: 0))
                     .font(.system(size: 11.5, weight: .bold, design: .rounded))
-                    .foregroundColor(mintColor)
+                    .foregroundColor(.white)
                     .monospacedDigit()
                     .lineLimit(1)
                     .minimumScaleFactor(0.75)
@@ -88,8 +89,8 @@ struct StatsRowView: View {
         return isEuropean ? "\(numStr) \(currencySymbol)" : "\(currencySymbol)\(numStr)"
     }
 
-    private func formatTwoDecimals(_ value: Double) -> String {
-        let numStr = CurrencyFormatter.format(value: value, currency: currencyCode, decimals: 2)
+    private func formatTwoDecimals(_ value: Double, decimals: Int = 2) -> String {
+        let numStr = CurrencyFormatter.format(value: value, currency: currencyCode, decimals: decimals)
         let isEuropean = ["EUR", "CHF"].contains(currencyCode.uppercased())
         return isEuropean ? "\(numStr) \(currencySymbol)" : "\(currencySymbol)\(numStr)"
     }

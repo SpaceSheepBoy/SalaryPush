@@ -85,6 +85,46 @@ public enum L10n {
         }
     }
 
+    public static func annualRate(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "年薪"
+        case .fr: return "Par an"
+        case .en: return "Annual"
+        case .de: return "Pro Jahr"
+        case .ja: return "年収"
+        }
+    }
+
+    public static func todayContribution(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "今日进账"
+        case .fr: return "Gains du jour"
+        case .en: return "Today"
+        case .de: return "Heute"
+        case .ja: return "本日進捗"
+        }
+    }
+
+    public static func targetLabel(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "目标"
+        case .fr: return "Objectif"
+        case .en: return "Goal"
+        case .de: return "Ziel"
+        case .ja: return "目標"
+        }
+    }
+
+    public static func paydayLabel(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "发薪日"
+        case .fr: return "Jour de paie"
+        case .en: return "Payday"
+        case .de: return "Zahltag"
+        case .ja: return "給料日"
+        }
+    }
+
     public static func monthEarned(_ lang: AppLanguage) -> String {
         switch lang {
         case .zh: return "本月已赚"

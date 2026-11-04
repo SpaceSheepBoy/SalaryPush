@@ -11,6 +11,7 @@ struct EarningsCounterView: View {
     let language: AppLanguage
 
     private let coralColor = Color(red: 0.92, green: 0.44, blue: 0.46)
+    private let goldYellowColor = Color(red: 0.98, green: 0.75, blue: 0.14) // #FBBF24 金黄色
     private let grayTeal = Color(red: 0.50, green: 0.59, blue: 0.62)
     private let mintColor = Color(red: 0.18, green: 0.90, blue: 0.61)
 
@@ -42,20 +43,23 @@ struct EarningsCounterView: View {
                 )
             }
 
-            // Big animated earnings number (strictly 2 decimal places, proper separator)
+            // Big animated earnings number (Golden yellow with cash emoji 💰, 2 decimal places, proper separator)
             HStack(alignment: .firstTextBaseline, spacing: 2) {
                 let formattedNumber = CurrencyFormatter.format(value: earnings, currency: currencyCode, decimals: 2)
                 let isEuropean = ["EUR", "CHF"].contains(currencyCode.uppercased())
 
+                Text("💰 ")
+                    .font(.system(size: 24))
+
                 if !isEuropean {
                     Text(currencySymbol)
                         .font(.system(size: 26, weight: .bold, design: .rounded))
-                        .foregroundColor(coralColor)
+                        .foregroundColor(goldYellowColor)
                 }
 
                 Text(formattedNumber)
                     .font(.system(size: 38, weight: .bold, design: .rounded))
-                    .foregroundColor(coralColor)
+                    .foregroundColor(goldYellowColor)
                     .monospacedDigit()
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
@@ -65,7 +69,7 @@ struct EarningsCounterView: View {
                 if isEuropean {
                     Text(currencySymbol)
                         .font(.system(size: 26, weight: .bold, design: .rounded))
-                        .foregroundColor(coralColor)
+                        .foregroundColor(goldYellowColor)
                 }
             }
             .padding(.top, 2)
