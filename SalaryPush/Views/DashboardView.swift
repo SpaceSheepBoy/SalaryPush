@@ -193,9 +193,21 @@ struct DashboardView: View {
         .onChange(of: settings.isMiniMode) { _, mini in
             updateWindowSize(mini: mini)
         }
+        .onChange(of: showSettings) { _, isShowing in
+            DispatchQueue.main.async {
+                if let window = NSApplication.shared.windows.first(where: { $0.contentView != nil && $0.className != "NSStatusBarWindow" }) {
+                    if isShowing {
+                        window.setContentSize(CGSize(width: 450, height: 700))
+                    } else {
+                        updateWindowSize(mini: settings.isMiniMode)
+                    }
+                }
+            }
+        }
         .sheet(isPresented: $showSettings) {
             SettingsView(settings: settings)
                 .preferredColorScheme(.dark)
+                .frame(minWidth: 420, idealWidth: 450, minHeight: 620, idealHeight: 700)
         }
     }
 

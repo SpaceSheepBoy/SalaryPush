@@ -69,6 +69,14 @@ struct ContentView: View {
         } else {
             SettingsView(settings: settings)
                 .preferredColorScheme(.dark)
+                .frame(minWidth: 420, idealWidth: 450, minHeight: 620, idealHeight: 700)
+                .onAppear {
+                    DispatchQueue.main.async {
+                        if let window = NSApplication.shared.windows.first(where: { $0.contentView != nil && $0.className != "NSStatusBarWindow" }) {
+                            window.setContentSize(CGSize(width: 450, height: 700))
+                        }
+                    }
+                }
         }
     }
 }

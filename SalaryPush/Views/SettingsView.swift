@@ -28,16 +28,30 @@ struct SettingsView: View {
         ScrollView {
             VStack(spacing: 16) {
                 // Header
-                VStack(spacing: 4) {
-                    Text("⚙️ \(settingsTitle)")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                ZStack(alignment: .trailing) {
+                    VStack(spacing: 4) {
+                        Text("⚙️ \(settingsTitle)")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
 
-                    Text(settingsSubtitle)
-                        .font(.system(size: 11))
-                        .foregroundColor(grayTeal)
+                        Text(settingsSubtitle)
+                            .font(.system(size: 11))
+                            .foregroundColor(grayTeal)
+                    }
+                    .frame(maxWidth: .infinity)
+
+                    Button(action: {
+                        settings.hasCompletedSetup = true
+                        dismiss()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(grayTeal.opacity(0.8))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.trailing, 4)
                 }
-                .padding(.top, 8)
+                .padding(.top, 12)
 
                 // 1. Language & Country Section
                 settingsSection(title: "🌐 语言与国家制度 (Language & Country)") {
@@ -52,7 +66,7 @@ struct SettingsView: View {
                                 Text(lang.displayName).tag(lang)
                             }
                         }
-                        .pickerStyle(.segmented)
+                        .labelsHidden()
                     }
 
                     // Country Picker
@@ -409,7 +423,7 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 16)
         }
-        .frame(width: 410, height: 640)
+        .frame(minWidth: 400, idealWidth: 440, maxWidth: .infinity, minHeight: 600, idealHeight: 680, maxHeight: .infinity)
         .background(outerBackground)
     }
 
