@@ -245,10 +245,13 @@ struct SettingsView: View {
                     HStack {
                         Text(settings.salaryInputMode == .monthly ? "月薪" : "年薪")
                             .foregroundColor(grayTeal)
-                            .frame(width: 50, alignment: .leading)
+                            .frame(width: 45, alignment: .leading)
 
                         TextField("金额", value: $settings.salaryAmount, format: .number)
                             .textFieldStyle(.roundedBorder)
+
+                        Stepper("", value: $settings.salaryAmount, in: 0...100_000_000, step: salaryStep)
+                            .labelsHidden()
 
                         Button("↺ 填入中位数") {
                             settings.applyCountryDefaults(settings.countrySystem)
@@ -256,7 +259,29 @@ struct SettingsView: View {
                         .buttonStyle(.plain)
                         .font(.system(size: 10))
                         .foregroundColor(coralColor)
-                        .padding(.horizontal, 4)
+                        .padding(.horizontal, 2)
+                    }
+
+                    // Quick adjustment pills
+                    HStack(spacing: 4) {
+                        Text("微调:")
+                            .font(.system(size: 9.5))
+                            .foregroundColor(grayTeal)
+
+                        ForEach(salaryPills, id: \.label) { pill in
+                            Button(action: {
+                                settings.salaryAmount = max(0, settings.salaryAmount + pill.delta)
+                            }) {
+                                Text(pill.label)
+                                    .font(.system(size: 9.5, weight: .medium, design: .monospaced))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 2)
+                                    .background(Color.white.opacity(0.06))
+                                    .cornerRadius(4)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
 
                     HStack {
@@ -728,6 +753,30 @@ struct SettingsView: View {
         case .ja: return "国の制度に合わせた社会保険・有休・給与の精密設定"
         case .en: return "Configure social benefits, leave and salary by country"
         }
+    }
+
+    private var salaryStep: Double {
+        let curr = settings.salaryCurrency.uppercased()
+        let isAnnual = settings.salaryInputMode == .annual
+        if curr == "JPY" {
+            return isAnnual ? 50_000 : 5_000
+        }
+        return isAnnual ? 500 : 100
+    }
+
+    private var salaryPills: [(label: String, delta: Double)] {
+        let curr = settings.salaryCurrency.uppercased()
+        let isAnnual = settings.salaryInputMode == .annual
+        if curr == "JPY" {
+            if isAnnual {
+                return [("-50万", -500_000), ("-10万", -100_000), ("+10万", 100_000), ("+50万", 500_000), ("+100万", 1_000_000)]
+            }
+            return [("-5万", -50_000), ("-1万", -10_000), ("+1万", 10_000), ("+5万", 50_000), ("+10万", 100_000)]
+        }
+        if isAnnual {
+            return [("-10,000", -10_000), ("-5,000", -5_000), ("+5,000", 5_000), ("+10,000", 10_000), ("+20,000", 20_000)]
+        }
+        return [("-500", -500), ("-100", -100), ("+100", 100), ("+500", 500), ("+1,000", 1000)]
     }
 
     private var saveButtonText: String {
