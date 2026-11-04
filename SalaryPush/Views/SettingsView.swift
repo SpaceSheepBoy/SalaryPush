@@ -167,6 +167,49 @@ struct SettingsView: View {
 
                         Stepper("\(settings.retirementAge) 岁", value: $settings.retirementAge, in: 50...75)
                     }
+
+                    HStack {
+                        Text("每月发薪日 (Payday)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 12))
+
+                        Spacer()
+
+                        Picker("", selection: $settings.paydayDay) {
+                            Text("📅 每月月底 (默认)").tag(0)
+                            ForEach([1, 5, 8, 10, 15, 20, 25, 28, 30], id: \.self) { d in
+                                Text("每月 \(d) 号").tag(d)
+                            }
+                        }
+                        .labelsHidden()
+                    }
+                }
+
+                // 3. Custom Wishlist Milestone
+                settingsSection(title: "🎯 私人心愿目标 (Milestone Goal)") {
+                    HStack {
+                        Text("心愿名称")
+                            .foregroundColor(grayTeal)
+                            .font(.system(size: 11))
+                            .frame(width: 60, alignment: .leading)
+
+                        TextField("例如 PS5 / 旅行机票", text: $settings.customWishlistName)
+                            .textFieldStyle(.roundedBorder)
+                    }
+
+                    HStack {
+                        Text("目标金额")
+                            .foregroundColor(grayTeal)
+                            .font(.system(size: 11))
+                            .frame(width: 60, alignment: .leading)
+
+                        TextField("金额", value: $settings.customWishlistPrice, format: .number)
+                            .textFieldStyle(.roundedBorder)
+
+                        Text(settings.displayCurrency)
+                            .foregroundColor(grayTeal)
+                            .font(.system(size: 11))
+                    }
                 }
 
                 // 3. Salary & Currency

@@ -158,6 +158,9 @@ final class SalarySettings: ObservableObject {
     @AppStorage("isMiniMode") var isMiniMode: Bool = false
     @AppStorage("alwaysOnTop") var alwaysOnTop: Bool = false
     @AppStorage("showMenuBarExtra") var showMenuBarExtra: Bool = true
+    @AppStorage("paydayDay") var paydayDay: Int = 0 // 0 = 月底最后一天 (默认)
+    @AppStorage("customWishlistName") var customWishlistName: String = "PS5 Pro 游戏机"
+    @AppStorage("customWishlistPrice") var customWishlistPrice: Double = 4299.0
     @AppStorage("hasCompletedSetup") var hasCompletedSetup: Bool = false
 
     // MARK: - Auto-fill Country Defaults (Still allows manual modifications)

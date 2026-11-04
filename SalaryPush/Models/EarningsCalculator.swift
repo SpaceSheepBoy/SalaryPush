@@ -451,4 +451,93 @@ struct EarningsCalculator {
             dayStrips: strips
         )
     }
+
+    // MARK: - Payday Countdown
+    public struct PaydayInfo {
+        public let days: Int
+        public let hours: Int
+        public let isEndOfMonth: Bool
+        public let displayLabel: String
+    }
+
+    public func paydayCountdown(now: Date = Date()) -> PaydayInfo {
+        let cal = Calendar.current
+        let rawDay = settings.paydayDay
+        let isEndOfMonth = rawDay == 0 || rawDay > 30
+
+        var target: Date
+        if isEndOfMonth {
+            let year = cal.component(.year, from: now)
+            let month = cal.component(.month, from: now)
+            var comps = DateComponents(year: year, month: month + 1, day: 0, hour: 23, minute: 59, second: 59)
+            let lastDayCurrent = cal.date(from: comps) ?? now
+            if now.timeIntervalSince1970 >= lastDayCurrent.timeIntervalSince1970 - 86400 {
+                comps = DateComponents(year: year, month: month + 2, day: 0, hour: 0, minute: 0, second: 0)
+                target = cal.date(from: comps) ?? now
+            } else {
+                comps = DateComponents(year: year, month: month + 1, day: 0, hour: 0, minute: 0, second: 0)
+                target = cal.date(from: comps) ?? now
+            }
+        } else {
+            let year = cal.component(.year, from: now)
+            let month = cal.component(.month, from: now)
+            var comps = DateComponents(year: year, month: month, day: rawDay, hour: 0, minute: 0, second: 0)
+            let targetThisMonth = cal.date(from: comps) ?? now
+            if cal.component(.day, from: now) >= rawDay {
+                comps = DateComponents(year: year, month: month + 1, day: rawDay, hour: 0, minute: 0, second: 0)
+                target = cal.date(from: comps) ?? now
+            } else {
+                target = targetThisMonth
+            }
+        }
+
+        let diffSec = max(0, target.timeIntervalSince(now))
+        let days = Int(diffSec / 86400)
+        let hours = Int((Int(diffSec) % 86400) / 3600)
+
+        let label: String
+        if isEndOfMonth {
+            switch settings.appLanguage {
+            case .zh: label = "每月月底"
+            case .fr: label = "Fin de mois"
+            case .de: label = "Monatsende"
+            case .ja: label = "月末"
+            case .en: label = "End of Month"
+            }
+        } else {
+            switch settings.appLanguage {
+            case .zh: label = "每月\(rawDay)号"
+            case .fr: label = "Le \(rawDay) du mois"
+            case .de: label = "Am \(rawDay). des Monats"
+            case .ja: label = "毎月\(rawDay)日"
+            case .en: label = "Day \(rawDay)"
+            }
+        }
+
+        return PaydayInfo(days: days, hours: hours, isEndOfMonth: isEndOfMonth, displayLabel: label)
+    }
+
+    // MARK: - Custom Wishlist Goal
+    public struct CustomWishlistInfo {
+        public let name: String
+        public let price: Double
+        public let formattedPrice: String
+        public let todayEarned: Double
+        public let progressPercent: Double
+    }
+
+    public func customWishlistGoal(todayEarned: Double) -> CustomWishlistInfo {
+        let name = settings.customWishlistName.isEmpty ? "我的心愿" : settings.customWishlistName
+        let price = max(1.0, settings.customWishlistPrice)
+        let progress = min(100.0, (todayEarned / price) * 100.0)
+        let formattedPrice = CurrencyFormatter.format(value: price, currency: settings.displayCurrency, decimals: 2)
+
+        return CustomWishlistInfo(
+            name: name,
+            price: price,
+            formattedPrice: formattedPrice,
+            todayEarned: todayEarned,
+            progressPercent: progress
+        )
+    }
 }

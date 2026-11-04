@@ -16,6 +16,7 @@ struct DashboardView: View {
     private let cardBorder = Color(red: 0.12, green: 0.22, blue: 0.25)
     private let grayTeal = Color(red: 0.50, green: 0.59, blue: 0.62)
     private let cyanBenefitColor = Color(red: 0.35, green: 0.75, blue: 0.87) // #58BEDD
+    private let mintBadgeColor = Color(red: 0.18, green: 0.90, blue: 0.61) // #2EE59C
     private let outerBackground = Color(red: 0.035, green: 0.078, blue: 0.090) // #091417
 
     private var exchangeRate: Double {
@@ -131,6 +132,60 @@ struct DashboardView: View {
                         currentDate: currentDate,
                         language: settings.appLanguage
                     )
+
+                    // 7. Dedicated Custom Wishlist Milestone & Payday Card
+                    let wishlist = calculator.customWishlistGoal(todayEarned: calculator.todayEarnings(at: currentDate))
+                    let payday = calculator.paydayCountdown(now: currentDate)
+
+                    VStack(spacing: 5) {
+                        HStack {
+                            Text("🎯 \(wishlist.name)")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundColor(.white)
+
+                            Spacer()
+
+                            Button(action: { showSettings = true }) {
+                                HStack(spacing: 3) {
+                                    Text("\(String(format: "%.1f", wishlist.progressPercent))%")
+                                        .font(.system(size: 11, weight: .bold, design: .monospaced))
+                                        .foregroundColor(mintBadgeColor)
+                                    Image(systemName: "pencil")
+                                        .font(.system(size: 9))
+                                        .foregroundColor(grayTeal)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
+
+                        // Progress Bar
+                        GeometryReader { geo in
+                            ZStack(alignment: .leading) {
+                                Capsule()
+                                    .fill(Color.white.opacity(0.08))
+                                    .frame(height: 5)
+                                Capsule()
+                                    .fill(mintBadgeColor)
+                                    .frame(width: max(4, geo.size.width * CGFloat(min(1.0, wishlist.progressPercent / 100.0))), height: 5)
+                            }
+                        }
+                        .frame(height: 5)
+
+                        HStack {
+                            Text("今日贡献 \(formatBenefitAmount(wishlist.todayEarned)) / 目标 \(wishlist.formattedPrice)")
+                                .font(.system(size: 9))
+                                .foregroundColor(grayTeal)
+
+                            Spacer()
+
+                            Text("💰 发薪日: \(payday.displayLabel) (余 \(payday.days)天)")
+                                .font(.system(size: 9, weight: .medium))
+                                .foregroundColor(Color(red: 0.95, green: 0.77, blue: 0.25))
+                        }
+                    }
+                    .padding(8)
+                    .background(Color.white.opacity(0.035))
+                    .cornerRadius(8)
                 }
             }
             .padding(settings.isMiniMode ? 10 : 14)
