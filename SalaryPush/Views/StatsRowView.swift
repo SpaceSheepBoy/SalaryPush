@@ -1,60 +1,81 @@
 import SwiftUI
 
-/// Displays per-second, hourly, and daily earnings in 3 compact clean columns
+/// Displays per-second, hourly, daily, and month-to-date earnings in 4 compact clean columns
 struct StatsRowView: View {
     let perSecond: Double
     let hourly: Double
     let daily: Double
+    var monthToDate: Double = 0.0
     let currencySymbol: String
     let currencyCode: String
     let language: AppLanguage
 
     private let grayTeal = Color(red: 0.50, green: 0.59, blue: 0.62)
+    private let mintColor = Color(red: 0.18, green: 0.90, blue: 0.61)
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 2) {
             // Column 1: 每秒进账
             VStack(alignment: .leading, spacing: 3) {
                 Text(L10n.perSecond(language))
-                    .font(.system(size: 10, weight: .regular))
+                    .font(.system(size: 9.5, weight: .regular))
                     .foregroundColor(grayTeal)
+                    .lineLimit(1)
 
                 Text(formatPerSecond(perSecond))
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .font(.system(size: 11.5, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .monospacedDigit()
                     .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(0.75)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
             // Column 2: 时薪
             VStack(alignment: .leading, spacing: 3) {
                 Text(L10n.hourlyRate(language))
-                    .font(.system(size: 10, weight: .regular))
+                    .font(.system(size: 9.5, weight: .regular))
                     .foregroundColor(grayTeal)
+                    .lineLimit(1)
 
                 Text(formatTwoDecimals(hourly))
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .font(.system(size: 11.5, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .monospacedDigit()
                     .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(0.75)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
             // Column 3: 日薪
             VStack(alignment: .leading, spacing: 3) {
                 Text(L10n.dailyRate(language))
-                    .font(.system(size: 10, weight: .regular))
+                    .font(.system(size: 9.5, weight: .regular))
                     .foregroundColor(grayTeal)
+                    .lineLimit(1)
 
                 Text(formatTwoDecimals(daily))
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .font(.system(size: 11.5, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .monospacedDigit()
                     .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(0.75)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Column 4: 本月已赚
+            VStack(alignment: .leading, spacing: 3) {
+                Text(L10n.monthEarned(language))
+                    .font(.system(size: 9.5, weight: .regular))
+                    .foregroundColor(mintColor)
+                    .lineLimit(1)
+
+                Text(formatTwoDecimals(monthToDate))
+                    .font(.system(size: 11.5, weight: .bold, design: .rounded))
+                    .foregroundColor(mintColor)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

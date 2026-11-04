@@ -540,4 +540,61 @@ struct EarningsCalculator {
             progressPercent: progress
         )
     }
+
+    // MARK: - Month-to-Date Earnings
+    public struct MonthEarningsInfo {
+        public let pastDaysEarned: Double
+        public let todayEarned: Double
+        public let totalEarned: Double
+        public let totalExpected: Double
+        public let progressPercent: Double
+        public let pastWorkDays: Int
+        public let totalWorkDaysInMonth: Int
+    }
+
+    public func monthToDateEarnings(at date: Date = Date()) -> MonthEarningsInfo {
+        let cal = Calendar.current
+        let year = cal.component(.year, from: date)
+        let month = cal.component(.month, from: date)
+        let currentDay = cal.component(.day, from: date)
+
+        // Range of days in current month
+        guard let range = cal.range(of: .day, in: .month, for: date) else {
+            let t = todayEarnings(at: date)
+            return MonthEarningsInfo(pastDaysEarned: 0, todayEarned: t, totalEarned: t, totalExpected: max(1, monthlySalaryDisplay), progressPercent: 0, pastWorkDays: 0, totalWorkDaysInMonth: 22)
+        }
+
+        var pastWorkDays = 0
+        var totalWorkDaysInMonth = 0
+
+        for d in range {
+            let comps = DateComponents(year: year, month: month, day: d)
+            if let dayDate = cal.date(from: comps) {
+                let weekday = cal.component(.weekday, from: dayDate) // 1=Sun, 2=Mon...
+                if settings.workDays.contains(weekday) {
+                    totalWorkDaysInMonth += 1
+                    if d < currentDay {
+                        pastWorkDays += 1
+                    }
+                }
+            }
+        }
+
+        let pastDaysEarned = Double(pastWorkDays) * dailyEarnings
+        let isTodayWork = settings.workDays.contains(cal.component(.weekday, from: date))
+        let todayEarned = isTodayWork ? todayEarnings(at: date) : 0
+        let totalEarned = pastDaysEarned + todayEarned
+        let totalExpected = max(1.0, Double(totalWorkDaysInMonth) * dailyEarnings)
+        let progressPercent = min(100.0, max(0.0, (totalEarned / totalExpected) * 100.0))
+
+        return MonthEarningsInfo(
+            pastDaysEarned: pastDaysEarned,
+            todayEarned: todayEarned,
+            totalEarned: totalEarned,
+            totalExpected: totalExpected,
+            progressPercent: progressPercent,
+            pastWorkDays: pastWorkDays,
+            totalWorkDaysInMonth: totalWorkDaysInMonth
+        )
+    }
 }

@@ -67,6 +67,7 @@ struct SettingsView: View {
                             }
                         }
                         .labelsHidden()
+                        .pickerStyle(.menu)
                     }
 
                     // Country Picker
@@ -81,6 +82,7 @@ struct SettingsView: View {
                             }
                         }
                         .labelsHidden()
+                        .pickerStyle(.menu)
                         .onChange(of: settings.countrySystem) { _, newCountry in
                             // Auto-input holidays, currency, retirement according to country
                             settings.applyCountryDefaults(newCountry)
@@ -182,6 +184,7 @@ struct SettingsView: View {
                             }
                         }
                         .labelsHidden()
+                        .pickerStyle(.menu)
                     }
                 }
 
@@ -249,6 +252,7 @@ struct SettingsView: View {
                             }
                         }
                         .labelsHidden()
+                        .pickerStyle(.menu)
                         .frame(maxWidth: .infinity)
                     }
 
@@ -263,6 +267,7 @@ struct SettingsView: View {
                             }
                         }
                         .labelsHidden()
+                        .pickerStyle(.menu)
                         .frame(maxWidth: .infinity)
                     }
 
@@ -466,7 +471,7 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 16)
         }
-        .frame(minWidth: 400, idealWidth: 440, maxWidth: .infinity, minHeight: 600, idealHeight: 680, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(outerBackground)
     }
 
@@ -519,6 +524,7 @@ struct SettingsView: View {
                     }
                 }
                 .labelsHidden()
+                .pickerStyle(.menu)
             }
 
             VStack(alignment: .leading, spacing: 3) {
@@ -532,6 +538,7 @@ struct SettingsView: View {
                     }
                 }
                 .labelsHidden()
+                .pickerStyle(.menu)
             }
 
             HStack {

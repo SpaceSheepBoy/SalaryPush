@@ -85,6 +85,26 @@ public enum L10n {
         }
     }
 
+    public static func monthEarned(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "本月已赚"
+        case .fr: return "Ce mois"
+        case .en: return "This Month"
+        case .de: return "Diesen Monat"
+        case .ja: return "今月の稼ぎ"
+        }
+    }
+
+    public static func monthProgress(_ lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return "完成"
+        case .fr: return "Progression"
+        case .en: return "Progress"
+        case .de: return "Fortschritt"
+        case .ja: return "達成率"
+        }
+    }
+
     public static func nextRest(_ lang: AppLanguage) -> String {
         switch lang {
         case .zh: return "下一个休息"

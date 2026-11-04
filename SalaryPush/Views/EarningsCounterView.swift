@@ -3,6 +3,7 @@ import SwiftUI
 /// The animated top earnings counter matching the reference video style with compact layout and locale formatting
 struct EarningsCounterView: View {
     let earnings: Double
+    var monthInfo: EarningsCalculator.MonthEarningsInfo? = nil
     let currencySymbol: String
     let currencyCode: String
     let isWorking: Bool
@@ -11,6 +12,7 @@ struct EarningsCounterView: View {
 
     private let coralColor = Color(red: 0.92, green: 0.44, blue: 0.46)
     private let grayTeal = Color(red: 0.50, green: 0.59, blue: 0.62)
+    private let mintColor = Color(red: 0.18, green: 0.90, blue: 0.61)
 
     var body: some View {
         VStack(spacing: 4) {
@@ -67,6 +69,33 @@ struct EarningsCounterView: View {
                 }
             }
             .padding(.top, 2)
+
+            // Month-to-Date Live Pill right under Hero Amount
+            if let month = monthInfo {
+                HStack(spacing: 4) {
+                    Text("\(L10n.monthEarned(language)):")
+                        .foregroundColor(grayTeal)
+                    let formattedMonth = CurrencyFormatter.format(value: month.totalEarned, currency: currencyCode, decimals: 2)
+                    let isEuropean = ["EUR", "CHF"].contains(currencyCode.uppercased())
+                    Text(isEuropean ? "\(formattedMonth) \(currencySymbol)" : "\(currencySymbol)\(formattedMonth)")
+                        .fontWeight(.bold)
+                        .foregroundColor(mintColor)
+                    Text("(\(L10n.monthProgress(language)) \(String(format: "%.1f", month.progressPercent))%)")
+                        .foregroundColor(grayTeal.opacity(0.8))
+                }
+                .font(.system(size: 11, design: .rounded))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(
+                    Capsule()
+                        .fill(Color(red: 0.07, green: 0.14, blue: 0.16))
+                )
+                .overlay(
+                    Capsule()
+                        .stroke(Color(red: 0.11, green: 0.21, blue: 0.24), lineWidth: 1)
+                )
+                .padding(.top, 1)
+            }
 
             // Centered motivational quote in elegant serif font
             Text(motivationalText)

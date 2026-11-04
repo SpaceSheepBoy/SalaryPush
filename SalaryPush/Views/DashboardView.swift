@@ -68,9 +68,12 @@ struct DashboardView: View {
 
             // The Main Sleek Compact Card (Supports Full and Mini Modes)
             VStack(spacing: settings.isMiniMode ? 6 : 10) {
-                // 1. Today's earnings counter + status badge + motivational quote (Shown in both Full and Mini)
+                let monthInfo = calculator.monthToDateEarnings(at: currentDate)
+
+                // 1. Today's earnings counter + month capsule + status badge + motivational quote (Shown in both Full and Mini)
                 EarningsCounterView(
                     earnings: calculator.todayEarnings(at: currentDate),
+                    monthInfo: monthInfo,
                     currencySymbol: settings.displayCurrencySymbol,
                     currencyCode: settings.displayCurrency,
                     isWorking: calculator.isCurrentlyWorking(at: currentDate),
@@ -79,11 +82,12 @@ struct DashboardView: View {
                 )
 
                 if !settings.isMiniMode {
-                    // 2. Stats row: per-second, hourly, daily
+                    // 2. Stats row: per-second, hourly, daily, month-to-date
                     StatsRowView(
                         perSecond: calculator.perSecondEarnings,
                         hourly: calculator.hourlyEarnings,
                         daily: calculator.dailyEarnings,
+                        monthToDate: monthInfo.totalEarned,
                         currencySymbol: settings.displayCurrencySymbol,
                         currencyCode: settings.displayCurrency,
                         language: settings.appLanguage
@@ -235,7 +239,7 @@ struct DashboardView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, settings.isMiniMode ? 6 : 8)
-        .frame(width: settings.isMiniMode ? 260 : 346)
+        .frame(width: showSettings ? 450 : (settings.isMiniMode ? 260 : 346))
         .background(outerBackground)
         .onAppear {
             motivationalText = MotivationalQuotes.random(lang: settings.appLanguage)
@@ -262,7 +266,7 @@ struct DashboardView: View {
         .sheet(isPresented: $showSettings) {
             SettingsView(settings: settings)
                 .preferredColorScheme(.dark)
-                .frame(minWidth: 420, idealWidth: 450, minHeight: 620, idealHeight: 700)
+                .frame(width: 440, height: 680)
         }
     }
 
