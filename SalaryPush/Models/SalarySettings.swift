@@ -159,8 +159,8 @@ final class SalarySettings: ObservableObject {
     @AppStorage("alwaysOnTop") var alwaysOnTop: Bool = false
     @AppStorage("showMenuBarExtra") var showMenuBarExtra: Bool = true
     @AppStorage("paydayDay") var paydayDay: Int = 0 // 0 = 月底最后一天 (默认)
-    @AppStorage("customWishlistName") var customWishlistName: String = "PS5 Pro 游戏机"
-    @AppStorage("customWishlistPrice") var customWishlistPrice: Double = 4299.0
+    @AppStorage("customWishlistName") var customWishlistName: String = "PS5 游戏机 (光驱版)"
+    @AppStorage("customWishlistPrice") var customWishlistPrice: Double = 3599.0
     @AppStorage("hasCompletedSetup") var hasCompletedSetup: Bool = false
 
     // MARK: - Auto-fill Country Defaults (Still allows manual modifications)
@@ -176,6 +176,8 @@ final class SalarySettings: ObservableObject {
             annualPublicHolidays = 11
             retirementAge = 60
             appLanguage = .zh
+            customWishlistName = "PS5 游戏机 (光驱版)"
+            customWishlistPrice = 3599.0
         case .france:
             salaryAmount = 2500
             salaryCurrency = "EUR"
@@ -185,6 +187,8 @@ final class SalarySettings: ObservableObject {
             franceRTTDays = 10
             retirementAge = 64
             appLanguage = .fr
+            customWishlistName = "Console PS5"
+            customWishlistPrice = 549.0
         case .germany:
             salaryAmount = 3500
             salaryCurrency = "EUR"
@@ -193,6 +197,8 @@ final class SalarySettings: ObservableObject {
             annualPublicHolidays = 10
             retirementAge = 67
             appLanguage = .de
+            customWishlistName = "PS5 Konsole"
+            customWishlistPrice = 549.0
         case .uk:
             salaryAmount = 2900
             salaryCurrency = "GBP"
@@ -201,6 +207,8 @@ final class SalarySettings: ObservableObject {
             annualPublicHolidays = 8
             retirementAge = 66
             appLanguage = .en
+            customWishlistName = "PS5 Console"
+            customWishlistPrice = 479.0
         case .japan:
             salaryAmount = 350000
             salaryCurrency = "JPY"
@@ -209,6 +217,8 @@ final class SalarySettings: ObservableObject {
             annualPublicHolidays = 16
             retirementAge = 65
             appLanguage = .ja
+            customWishlistName = "PS5 本体"
+            customWishlistPrice = 79980.0
         case .us:
             salaryAmount = 4500
             salaryCurrency = "USD"
@@ -217,6 +227,8 @@ final class SalarySettings: ObservableObject {
             annualPublicHolidays = 10 // Federal Holidays
             retirementAge = 67
             appLanguage = .en
+            customWishlistName = "PS5 Console"
+            customWishlistPrice = 499.0
         case .custom:
             break
         }
