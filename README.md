@@ -2,6 +2,9 @@
 
 <div align="center">
 
+<img src="docs/icon.png" width="128" height="128" alt="WorkFuel Icon" style="border-radius: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); margin-bottom: 16px;" />
+<br/>
+
 ![macOS 14.0+](https://img.shields.io/badge/macOS-14.0%2B-blue?logo=apple&style=for-the-badge)
 ![Universal Binary](https://img.shields.io/badge/arch-Apple%20Silicon%20%7C%20Intel-success?style=for-the-badge)
 ![License MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)

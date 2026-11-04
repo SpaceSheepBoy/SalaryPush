@@ -15,6 +15,7 @@
 		30C3FFE6DCE4944D6A261A6D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC0BCA6C456E06CC84BE592 /* SettingsView.swift */; };
 		491762F7FFD0BE492F3550CC /* EarningsCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32993A0DC2C33EE0EC9D6DD /* EarningsCounterView.swift */; };
 		5A9F4AA7B51C55A39125E581 /* EarningsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C4E067528E5C7D17A1B41 /* EarningsCalculator.swift */; };
+		988B1DF8DCF8363C6BB1DFB4 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 83DA1CF087AFAF1D767A5319 /* AppIcon.icns */; };
 		B53829C34F77864AAB17C761 /* SalarySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF50CB164BF6ED2A49AB95 /* SalarySettings.swift */; };
 		BA01540733AA1E65CA2F704A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2D7015E6DE01461A6F4371 /* DashboardView.swift */; };
 		D46419A1E5C4328E8614EFD1 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9BF3250889325DCB40DD38 /* CountdownView.swift */; };
@@ -28,6 +29,7 @@
 		333ADDAE6DC986A4D181782B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		352143809D8E0070A45F55A2 /* StatsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsRowView.swift; sourceTree = "<group>"; };
 		57CF060C91EF6923D4617435 /* WorkProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkProgressView.swift; sourceTree = "<group>"; };
+		83DA1CF087AFAF1D767A5319 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		A32993A0DC2C33EE0EC9D6DD /* EarningsCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningsCounterView.swift; sourceTree = "<group>"; };
 		AE9BF3250889325DCB40DD38 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		C28D42B5CFCB612C20E1B408 /* SalaryPush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalaryPush.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +85,7 @@
 		5DC91407D0F191E76D734C2F /* SalaryPush */ = {
 			isa = PBXGroup;
 			children = (
+				83DA1CF087AFAF1D767A5319 /* AppIcon.icns */,
 				32FCE47B9FAD012489EA268F /* Info.plist */,
 				E41CF00A85C36BCD3920FB07 /* SalaryPush.entitlements */,
 				F2C160A3356DC3090B5BD615 /* SalaryPushApp.swift */,
@@ -109,6 +112,7 @@
 			buildConfigurationList = E46FC6B89FAC4A788BE283FB /* Build configuration list for PBXNativeTarget "SalaryPush" */;
 			buildPhases = (
 				711E70A7E7D6649491C892D9 /* Sources */,
+				2E65F2C83E4EEF7F8F97C463 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -150,6 +154,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E65F2C83E4EEF7F8F97C463 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				988B1DF8DCF8363C6BB1DFB4 /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		711E70A7E7D6649491C892D9 /* Sources */ = {

@@ -20,6 +20,9 @@ targets:
       - SalaryPush
     info:
       path: SalaryPush/Info.plist
+      properties:
+        CFBundleDisplayName: 上班加油器
+        CFBundleIconFile: AppIcon
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.example.salarypush
