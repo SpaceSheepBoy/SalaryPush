@@ -148,7 +148,7 @@ struct EarningsCalculator {
             switch lang {
             case .zh: title = settings.chinaIncludeSocialSecurity ? "公积金+社保" : "公积金"
             case .fr: title = "Fonds Logement"
-            case .en: title = "Housing Fund"
+            default: title = "Housing Fund"
             }
 
             let monthlyFormatted = CurrencyFormatter.format(value: monthlyDisplay, currency: curr, decimals: 0)
@@ -157,7 +157,7 @@ struct EarningsCalculator {
             switch lang {
             case .zh: formula = "月入 \(sym)\(monthlyFormatted) · \(rateText)"
             case .fr: formula = "Mois: \(monthlyFormatted) \(sym) · \(rateText)"
-            case .en: formula = "Monthly: \(sym)\(monthlyFormatted) · \(rateText)"
+            default: formula = "Monthly: \(sym)\(monthlyFormatted) · \(rateText)"
             }
 
             return BenefitSummary(
@@ -183,14 +183,14 @@ struct EarningsCalculator {
                 switch lang {
                 case .zh: title = "社保 Cotisations"
                 case .fr: title = "Cotisations"
-                case .en: title = "Cotisations"
+                default: title = "Cotisations"
                 }
 
                 let formula: String
                 switch lang {
                 case .zh: formula = "月缴 \(sym)\(monthlyFormatted) · \(statusLabel) (-\(Int(cotisationRate * 100))%)"
                 case .fr: formula = "\(monthlyFormatted) \(sym)/mois · \(statusLabel) (-\(Int(cotisationRate * 100))%)"
-                case .en: formula = "\(sym)\(monthlyFormatted)/mo · \(statusLabel) (-\(Int(cotisationRate * 100))%)"
+                default: formula = "\(sym)\(monthlyFormatted)/mo · \(statusLabel) (-\(Int(cotisationRate * 100))%)"
                 }
 
                 return BenefitSummary(
@@ -213,14 +213,14 @@ struct EarningsCalculator {
                 switch lang {
                 case .zh: title = "净到手 Net"
                 case .fr: title = "Net à payer"
-                case .en: title = "Net Pay"
+                default: title = "Net Pay"
                 }
 
                 let formula: String
                 switch lang {
                 case .zh: formula = "毛薪 \(sym)\(brutFmt) → 净 \(sym)\(netFmt)"
                 case .fr: formula = "Brut \(brutFmt) \(sym) → Net \(netFmt) \(sym)"
-                case .en: formula = "Gross \(sym)\(brutFmt) → Net \(sym)\(netFmt)"
+                default: formula = "Gross \(sym)\(brutFmt) → Net \(sym)\(netFmt)"
                 }
 
                 return BenefitSummary(
@@ -243,14 +243,14 @@ struct EarningsCalculator {
                 switch lang {
                 case .zh: title = "饭补福利"
                 case .fr: title = "Tickets Resto"
-                case .en: title = "Meal & Transit"
+                default: title = "Meal & Transit"
                 }
 
                 let formula: String
                 switch lang {
                 case .zh: formula = "餐券 \(sym)\(ticketFmt)/天 + 交通50%"
                 case .fr: formula = "Tickets: \(ticketFmt) \(sym)/j + Navigo 50%"
-                case .en: formula = "Meal: \(sym)\(ticketFmt)/day + Transit"
+                default: formula = "Meal: \(sym)\(ticketFmt)/day + Transit"
                 }
 
                 return BenefitSummary(
@@ -260,6 +260,61 @@ struct EarningsCalculator {
                     formulaText: formula
                 )
             }
+
+        case .germany:
+            let pensionRate = settings.germanyPensionRate / 100.0
+            let totalMonthly = settings.monthlySalary * pensionRate * 2.0 // 9.3% AN + 9.3% AG
+            let perSecond = (totalMonthly * 12.0 / workingDaysPerYear / settings.workHoursPerDay / 3600.0) * exchangeRate
+            let accumulated = secondsWorked * perSecond
+            let monthlyDisplay = totalMonthly * exchangeRate
+            let monthlyFmt = CurrencyFormatter.format(value: monthlyDisplay, currency: curr, decimals: 0)
+
+            let title = lang == .zh ? "德国法定养老" : (lang == .de ? "Rentenbeitrag" : "German Pension")
+            let formula = "\(monthlyFmt) \(sym)/M · 9.3% AN + 9.3% AG"
+
+            return BenefitSummary(
+                title: title,
+                todayAccumulated: accumulated,
+                monthlyAmount: monthlyDisplay,
+                formulaText: formula
+            )
+
+        case .uk:
+            let empRate = settings.ukPensionRate / 100.0
+            let matchRate = settings.ukEmployerMatchRate / 100.0
+            let totalMonthly = settings.monthlySalary * (empRate + matchRate)
+            let perSecond = (totalMonthly * 12.0 / workingDaysPerYear / settings.workHoursPerDay / 3600.0) * exchangeRate
+            let accumulated = secondsWorked * perSecond
+            let monthlyDisplay = totalMonthly * exchangeRate
+            let monthlyFmt = CurrencyFormatter.format(value: monthlyDisplay, currency: curr, decimals: 0)
+
+            let title = lang == .zh ? "职业年金 Pension" : "Workplace Pension"
+            let formula = "\(sym)\(monthlyFmt)/mo · 5% + 3% Match"
+
+            return BenefitSummary(
+                title: title,
+                todayAccumulated: accumulated,
+                monthlyAmount: monthlyDisplay,
+                formulaText: formula
+            )
+
+        case .japan:
+            let rate = settings.japanSocialInsuranceRate / 100.0
+            let totalMonthly = settings.monthlySalary * rate * 2.0
+            let perSecond = (totalMonthly * 12.0 / workingDaysPerYear / settings.workHoursPerDay / 3600.0) * exchangeRate
+            let accumulated = secondsWorked * perSecond
+            let monthlyDisplay = totalMonthly * exchangeRate
+            let monthlyFmt = CurrencyFormatter.format(value: monthlyDisplay, currency: curr, decimals: 0)
+
+            let title = lang == .zh ? "日本社会保険" : (lang == .ja ? "社会保険(年金+健康)" : "Social Insurance")
+            let formula = "\(sym)\(monthlyFmt)/月 · 厚生年金+健康 折算"
+
+            return BenefitSummary(
+                title: title,
+                todayAccumulated: accumulated,
+                monthlyAmount: monthlyDisplay,
+                formulaText: formula
+            )
 
         case .us, .custom:
             let rate = settings.customBenefitRate / 100.0
@@ -363,8 +418,12 @@ struct EarningsCalculator {
         switch lang {
         case .zh:
             dateFormatted = "\(month)/\(day) 起 · 共 \(restLength) 天"
+        case .ja:
+            dateFormatted = "\(month)/\(day) から · 計 \(restLength) 日"
         case .fr:
             dateFormatted = "Dès le \(day)/\(month) · \(restLength) jours"
+        case .de:
+            dateFormatted = "Ab \(day).\(month). · \(restLength) Tage"
         case .en:
             dateFormatted = "From \(month)/\(day) · \(restLength) days"
         }

@@ -203,6 +203,8 @@ struct DashboardView: View {
         switch settings.appLanguage {
         case .zh: return "上班加油器"
         case .fr: return "Booster Salaire"
+        case .de: return "GehaltsRechner"
+        case .ja: return "給料チャージャー"
         case .en: return "Work Fuel"
         }
     }

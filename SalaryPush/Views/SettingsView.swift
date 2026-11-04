@@ -82,6 +82,12 @@ struct SettingsView: View {
                         chinaSection
                     } else if settings.countrySystem == .france {
                         franceSection
+                    } else if settings.countrySystem == .germany {
+                        germanySection
+                    } else if settings.countrySystem == .uk {
+                        ukSection
+                    } else if settings.countrySystem == .japan {
+                        japanSection
                     } else if settings.countrySystem == .us {
                         usSection
                     } else {
@@ -161,10 +167,18 @@ struct SettingsView: View {
                     HStack {
                         Text(settings.salaryInputMode == .monthly ? "月薪" : "年薪")
                             .foregroundColor(grayTeal)
-                            .frame(width: 60, alignment: .leading)
+                            .frame(width: 50, alignment: .leading)
 
                         TextField("金额", value: $settings.salaryAmount, format: .number)
                             .textFieldStyle(.roundedBorder)
+
+                        Button("↺ 填入中位数") {
+                            settings.applyCountryDefaults(settings.countrySystem)
+                        }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 10))
+                        .foregroundColor(coralColor)
+                        .padding(.horizontal, 4)
                     }
 
                     HStack {
@@ -494,6 +508,66 @@ struct SettingsView: View {
         .cornerRadius(8)
     }
 
+    private var germanySection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("德国法定养老保险 (Rentenversicherung)")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.white)
+                Spacer()
+                Text("9.3% + 9.3%")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundColor(Color(red: 0.18, green: 0.90, blue: 0.61))
+            }
+            Text("• 雇员 9.3% + 雇主 9.3% = 18.6% 全额统筹，年假通常为 28~30 天。")
+                .font(.system(size: 10))
+                .foregroundColor(grayTeal)
+        }
+        .padding(10)
+        .background(Color.white.opacity(0.03))
+        .cornerRadius(8)
+    }
+
+    private var ukSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("英国职业年金 (Workplace Pension)")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.white)
+                Spacer()
+                Text("5% + 3%")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundColor(Color(red: 0.18, green: 0.90, blue: 0.61))
+            }
+            Text("• 个人 5% + 雇主匹配 3% = 8%；法定总休假 28 天（含 8 天 Bank Holidays）。")
+                .font(.system(size: 10))
+                .foregroundColor(grayTeal)
+        }
+        .padding(10)
+        .background(Color.white.opacity(0.03))
+        .cornerRadius(8)
+    }
+
+    private var japanSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("日本社会保険 (厚生年金+健康保険)")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.white)
+                Spacer()
+                Text("~15% + 15%")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundColor(Color(red: 0.18, green: 0.90, blue: 0.61))
+            }
+            Text("• 厚生年金与健康险劳资对半；拥有 G7 最高的 16 天法定国民祝日。")
+                .font(.system(size: 10))
+                .foregroundColor(grayTeal)
+        }
+        .padding(10)
+        .background(Color.white.opacity(0.03))
+        .cornerRadius(8)
+    }
+
     private var usSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -558,6 +632,8 @@ struct SettingsView: View {
         switch settings.appLanguage {
         case .zh: return "设置 Settings"
         case .fr: return "Paramètres"
+        case .de: return "Einstellungen"
+        case .ja: return "設定 (Settings)"
         case .en: return "Settings"
         }
     }
@@ -566,6 +642,8 @@ struct SettingsView: View {
         switch settings.appLanguage {
         case .zh: return "按国家国情自定义社保、公积金、假期与薪资"
         case .fr: return "Configurez vos cotisations, congés et salaire selon votre pays"
+        case .de: return "Passen Sie Sozialabgaben, Urlaub und Gehalt nach Land an"
+        case .ja: return "国の制度に合わせた社会保険・有休・給与の精密設定"
         case .en: return "Configure social benefits, leave and salary by country"
         }
     }
@@ -574,6 +652,8 @@ struct SettingsView: View {
         switch settings.appLanguage {
         case .zh: return "保存并开始进账 (Done)"
         case .fr: return "Enregistrer et lancer"
+        case .de: return "Speichern und Starten"
+        case .ja: return "保存して開始 (Done)"
         case .en: return "Save and Start"
         }
     }

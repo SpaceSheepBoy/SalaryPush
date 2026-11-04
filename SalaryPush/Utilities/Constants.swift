@@ -4,16 +4,20 @@ import Foundation
 
 public enum AppLanguage: String, CaseIterable, Identifiable {
     case zh = "zh"
-    case fr = "fr"
     case en = "en"
+    case fr = "fr"
+    case de = "de"
+    case ja = "ja"
 
     public var id: String { rawValue }
 
     public var displayName: String {
         switch self {
         case .zh: return "简体中文 (Chinese)"
-        case .fr: return "Français (French)"
         case .en: return "English"
+        case .fr: return "Français (French)"
+        case .de: return "Deutsch (German)"
+        case .ja: return "日本語 (Japanese)"
         }
     }
 }
@@ -26,6 +30,8 @@ public enum L10n {
         case .zh: return "今日已赚"
         case .fr: return "Gains du jour"
         case .en: return "Earned Today"
+        case .de: return "Heute verdient"
+        case .ja: return "本日の稼ぎ"
         }
     }
 
@@ -34,6 +40,8 @@ public enum L10n {
         case .zh: return "在岗"
         case .fr: return "En poste"
         case .en: return "Working"
+        case .de: return "Bei der Arbeit"
+        case .ja: return "勤務中"
         }
     }
 
@@ -42,6 +50,8 @@ public enum L10n {
         case .zh: return "休息"
         case .fr: return "Repos"
         case .en: return "Off Duty"
+        case .de: return "Feierabend"
+        case .ja: return "退勤済"
         }
     }
 
@@ -50,6 +60,8 @@ public enum L10n {
         case .zh: return "每秒进账"
         case .fr: return "Par seconde"
         case .en: return "Per second"
+        case .de: return "Pro Sekunde"
+        case .ja: return "毎秒の稼ぎ"
         }
     }
 
@@ -58,6 +70,8 @@ public enum L10n {
         case .zh: return "时薪"
         case .fr: return "Taux horaire"
         case .en: return "Hourly"
+        case .de: return "Stundensatz"
+        case .ja: return "時給換算"
         }
     }
 
@@ -66,6 +80,8 @@ public enum L10n {
         case .zh: return "日薪"
         case .fr: return "Par jour"
         case .en: return "Daily"
+        case .de: return "Tagessatz"
+        case .ja: return "日給換算"
         }
     }
 
@@ -74,6 +90,8 @@ public enum L10n {
         case .zh: return "下一个休息"
         case .fr: return "Prochain repos"
         case .en: return "Next rest"
+        case .de: return "Nächste Pause"
+        case .ja: return "次の休日"
         }
     }
 
@@ -82,6 +100,8 @@ public enum L10n {
         case .zh: return "周末"
         case .fr: return "Week-end"
         case .en: return "Weekend"
+        case .de: return "Wochenende"
+        case .ja: return "週末"
         }
     }
 
@@ -90,6 +110,8 @@ public enum L10n {
         case .zh: return "假期"
         case .fr: return "Férié"
         case .en: return "Holiday"
+        case .de: return "Feiertag"
+        case .ja: return "祝日"
         }
     }
 
@@ -98,6 +120,8 @@ public enum L10n {
         case .zh: return "工作年限"
         case .fr: return "Ancienneté"
         case .en: return "Work tenure"
+        case .de: return "Betriebszugehörigkeit"
+        case .ja: return "勤続年数"
         }
     }
 
@@ -106,6 +130,8 @@ public enum L10n {
         case .zh: return "\(years) 年 \(months) 个月"
         case .fr: return "\(years) ans \(months) mois"
         case .en: return "\(years) yrs \(months) mos"
+        case .de: return "\(years) J \(months) M"
+        case .ja: return "\(years) 年 \(months) ヶ月"
         }
     }
 
@@ -114,6 +140,8 @@ public enum L10n {
         case .zh: return "距退休"
         case .fr: return "Avant retraite"
         case .en: return "To retirement"
+        case .de: return "Bis zur Rente"
+        case .ja: return "定年まで"
         }
     }
 
@@ -122,6 +150,8 @@ public enum L10n {
         case .zh: return "\(years) 年"
         case .fr: return "\(years) ans"
         case .en: return "\(years) years"
+        case .de: return "\(years) Jahre"
+        case .ja: return "\(years) 年"
         }
     }
 
@@ -130,6 +160,8 @@ public enum L10n {
         case .zh: return "已工作"
         case .fr: return "Travaillé"
         case .en: return "Worked"
+        case .de: return "Gearbeitet"
+        case .ja: return "本日の勤務"
         }
     }
 
@@ -138,6 +170,8 @@ public enum L10n {
         case .zh: return "距下班"
         case .fr: return "Fin de journée"
         case .en: return "Until off"
+        case .de: return "Bis Feierabend"
+        case .ja: return "退勤まで"
         }
     }
 
@@ -146,6 +180,8 @@ public enum L10n {
         case .zh: return "双击卡片打开设置 · 本地存储"
         case .fr: return "Double-clic pour réglages · Local"
         case .en: return "Double-click for settings · Local"
+        case .de: return "Doppelklick für Einstellungen · Lokal"
+        case .ja: return "ダブルクリックで設定 · ローカル保存"
         }
     }
 }
@@ -211,11 +247,33 @@ enum MotivationalQuotes {
         "paycheck loading... 🏦",
     ]
 
+    static let quotesDE: [String] = [
+        "Weiter so! 💪",
+        "Das Geld fließt 💰",
+        "Jede Sekunde zählt ⏱",
+        "Schritt für Schritt zur Freiheit 🚀",
+        "Bezahlte Kaffeepause ☕️",
+        "Bald ist Wochenende 🏖",
+        "Das Gehalt wächst kontinuierlich 📈",
+    ]
+
+    static let quotesJA: [String] = [
+        "一歩ずつ前進 💪",
+        "お給料チャージ中 💰",
+        "毎秒があなたの価値 ⏱",
+        "給料日へカウントダウン 🚀",
+        "有給コーヒーブレイク中 ☕️",
+        "もうすぐ週末 🏖",
+        "今日も一日お疲れ様です ✨",
+    ]
+
     static func random(lang: AppLanguage = .zh) -> String {
         switch lang {
         case .zh: return quotesZH.randomElement() ?? "keep going 💪"
         case .fr: return quotesFR.randomElement() ?? "keep going 💪"
         case .en: return quotesEN.randomElement() ?? "keep going 💪"
+        case .de: return quotesDE.randomElement() ?? "Weiter so! 💪"
+        case .ja: return quotesJA.randomElement() ?? "一歩ずつ前進 💪"
         }
     }
 }

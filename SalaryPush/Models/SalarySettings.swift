@@ -7,6 +7,9 @@ import Combine
 public enum CountrySystem: String, CaseIterable, Identifiable {
     case china = "china"
     case france = "france"
+    case germany = "germany"
+    case uk = "uk"
+    case japan = "japan"
     case us = "us"
     case custom = "custom"
 
@@ -14,9 +17,12 @@ public enum CountrySystem: String, CaseIterable, Identifiable {
 
     public var displayName: String {
         switch self {
-        case .china: return "中国 🇨🇳 (五险一金 · 住房公积金)"
-        case .france: return "法国 🇫🇷 (Cotisations · RTT · 饭补)"
-        case .us: return "美国 🇺🇸 (401k · PTO · 联邦假)"
+        case .china: return "中国 🇨🇳 (公积金 · 中位数 ¥8,000)"
+        case .france: return "法国 🇫🇷 (RTT · 饭补 · 中位数 2 500 €)"
+        case .germany: return "德国 🇩🇪 (Rente · 28天假 · 中位数 3 500 €)"
+        case .uk: return "英国 🇬🇧 (Pension · 28天假 · 中位数 £2,900)"
+        case .japan: return "日本 🇯🇵 (社会保険 · 16天祝日 · 中位数 ¥350,000)"
+        case .us: return "美国 🇺🇸 (401k · PTO · 中位数 $4,500)"
         case .custom: return "其他/自定义 🌐 (Custom)"
         }
     }
@@ -76,6 +82,10 @@ public enum SalaryInputMode: String, CaseIterable {
             return self == .monthly ? "月薪 Monthly" : "年薪 Annual"
         case .fr:
             return self == .monthly ? "Mensuel (Mois)" : "Annuel (An)"
+        case .de:
+            return self == .monthly ? "Monatlich (Monat)" : "Jährlich (Jahr)"
+        case .ja:
+            return self == .monthly ? "月給 (Monthly)" : "年俸 (Annual)"
         case .en:
             return self == .monthly ? "Monthly" : "Annual"
         }
@@ -103,6 +113,16 @@ final class SalarySettings: ObservableObject {
     @AppStorage("franceMonthlyTransport") var franceMonthlyTransport: Double = 43.20
     @AppStorage("franceRTTDays") var franceRTTDays: Int = 10
 
+    // MARK: - Germany Specifics
+    @AppStorage("germanyPensionRate") var germanyPensionRate: Double = 9.3
+
+    // MARK: - UK Specifics
+    @AppStorage("ukPensionRate") var ukPensionRate: Double = 5.0
+    @AppStorage("ukEmployerMatchRate") var ukEmployerMatchRate: Double = 3.0
+
+    // MARK: - Japan Specifics
+    @AppStorage("japanSocialInsuranceRate") var japanSocialInsuranceRate: Double = 15.0
+
     // MARK: - Custom Specifics
     @AppStorage("customBenefitName") var customBenefitName: String = "401(k) / 福利"
     @AppStorage("customBenefitRate") var customBenefitRate: Double = 10.0
@@ -110,7 +130,7 @@ final class SalarySettings: ObservableObject {
 
     // MARK: - Salary
     @AppStorage("salaryInputMode") var salaryInputMode: SalaryInputMode = .monthly
-    @AppStorage("salaryAmount") var salaryAmount: Double = 10000
+    @AppStorage("salaryAmount") var salaryAmount: Double = 8000 // 真实中国中位数月薪 ~¥8,000
     @AppStorage("salaryCurrency") var salaryCurrency: String = "CNY"
     @AppStorage("displayCurrency") var displayCurrency: String = "CNY"
 
@@ -146,6 +166,7 @@ final class SalarySettings: ObservableObject {
         countrySystem = country
         switch country {
         case .china:
+            salaryAmount = 8000
             salaryCurrency = "CNY"
             displayCurrency = "CNY"
             annualPaidHolidays = 5
@@ -153,6 +174,7 @@ final class SalarySettings: ObservableObject {
             retirementAge = 60
             appLanguage = .zh
         case .france:
+            salaryAmount = 2500
             salaryCurrency = "EUR"
             displayCurrency = "EUR"
             annualPaidHolidays = 25 // 5 weeks CP
@@ -160,7 +182,32 @@ final class SalarySettings: ObservableObject {
             franceRTTDays = 10
             retirementAge = 64
             appLanguage = .fr
+        case .germany:
+            salaryAmount = 3500
+            salaryCurrency = "EUR"
+            displayCurrency = "EUR"
+            annualPaidHolidays = 28
+            annualPublicHolidays = 10
+            retirementAge = 67
+            appLanguage = .de
+        case .uk:
+            salaryAmount = 2900
+            salaryCurrency = "GBP"
+            displayCurrency = "GBP"
+            annualPaidHolidays = 20
+            annualPublicHolidays = 8
+            retirementAge = 66
+            appLanguage = .en
+        case .japan:
+            salaryAmount = 350000
+            salaryCurrency = "JPY"
+            displayCurrency = "JPY"
+            annualPaidHolidays = 14
+            annualPublicHolidays = 16
+            retirementAge = 65
+            appLanguage = .ja
         case .us:
+            salaryAmount = 4500
             salaryCurrency = "USD"
             displayCurrency = "USD"
             annualPaidHolidays = 15 // Standard PTO
