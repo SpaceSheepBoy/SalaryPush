@@ -50,10 +50,51 @@ struct EarningsCalculator {
         workingDaysPerYear * settings.workHoursPerDay
     }
 
+    // MARK: - Tax & Deduction Calculation (Brut vs Net)
+
+    var deductionRate: Double {
+        switch settings.countrySystem {
+        case .france:
+            return settings.franceStatus == .cadre ? 0.25 : (settings.franceStatus == .nonCadre ? 0.22 : 0.15)
+        case .china:
+            let fund = (settings.chinaHousingFundEnabled ? settings.chinaHousingFundRate : 0.0) / 100.0
+            let social = settings.chinaIncludeSocialSecurity ? 0.105 : 0.0
+            return fund + social
+        case .germany:
+            return (settings.germanyPensionRate + 10.0) / 100.0
+        case .uk:
+            return (settings.ukPensionRate + 8.0) / 100.0
+        case .japan:
+            return settings.japanSocialInsuranceRate / 100.0
+        case .us:
+            return 0.12
+        case .custom:
+            return settings.customBenefitRate / 100.0
+        }
+    }
+
+    var annualBrut: Double {
+        if settings.salaryTaxMode == .net {
+            return settings.annualSalary / max(0.1, 1.0 - deductionRate)
+        }
+        return settings.annualSalary
+    }
+
+    var annualNet: Double {
+        if settings.salaryTaxMode == .net {
+            return settings.annualSalary
+        }
+        return settings.annualSalary * (1.0 - deductionRate)
+    }
+
+    var effectiveAnnualSalary: Double {
+        annualNet
+    }
+
     // MARK: - Earnings in Salary Currency
 
     var dailyEarningsSalaryCurrency: Double {
-        settings.annualSalary / workingDaysPerYear
+        effectiveAnnualSalary / workingDaysPerYear
     }
 
     var hourlyEarningsSalaryCurrency: Double {
@@ -80,11 +121,11 @@ struct EarningsCalculator {
     }
 
     var monthlySalaryDisplay: Double {
-        settings.monthlySalary * exchangeRate
+        (effectiveAnnualSalary / 12.0) * exchangeRate
     }
 
     var annualEarnings: Double {
-        settings.annualSalary * exchangeRate
+        effectiveAnnualSalary * exchangeRate
     }
 
     // MARK: - Today's Earnings (Strictly 2 Decimals when Formatted)
@@ -526,15 +567,24 @@ struct EarningsCalculator {
         public let name: String
         public let price: Double
         public let formattedPrice: String
+        public let saved: Double
+        public let formattedSaved: String
+        public let remaining: Double
+        public let formattedRemaining: String
+        public let totalAccumulated: Double
         public let rawPrice: Double
+        public let rawSaved: Double
         public let rawCurrency: String
         public let todayEarned: Double
         public let progressPercent: Double
+        public let savedPercent: Double
+        public let todayPercent: Double
     }
 
     public func customWishlistGoal(todayEarned: Double, exchangeRateService: ExchangeRateService? = nil) -> CustomWishlistInfo {
         let name = settings.customWishlistName.isEmpty ? "我的心愿" : settings.customWishlistName
         let rawPrice = max(1.0, settings.customWishlistPrice)
+        let rawSaved = max(0.0, settings.customWishlistSaved)
         let wishlistCurr = settings.customWishlistCurrency.isEmpty ? settings.displayCurrency : settings.customWishlistCurrency
         let displayCurr = settings.displayCurrency
 
@@ -550,18 +600,34 @@ struct EarningsCalculator {
         }
 
         let convertedPrice = rawPrice * rate
-        let progress = min(100.0, (todayEarned / max(0.01, convertedPrice)) * 100.0)
+        let convertedSaved = rawSaved * rate
+        let totalAccumulated = convertedSaved + todayEarned
+        let progress = min(100.0, max(0.0, (totalAccumulated / max(0.01, convertedPrice)) * 100.0))
+        let savedPercent = min(100.0, max(0.0, (convertedSaved / max(0.01, convertedPrice)) * 100.0))
+        let todayPercent = min(max(0.0, 100.0 - savedPercent), max(0.0, (todayEarned / max(0.01, convertedPrice)) * 100.0))
+        let remaining = max(0.0, convertedPrice - totalAccumulated)
+
         let formattedBase = CurrencyFormatter.format(value: convertedPrice, currency: displayCurr, decimals: 2)
         let formattedPrice = wishlistCurr != displayCurr ? "\(formattedBase) (\(CurrencyFormatter.format(value: rawPrice, currency: wishlistCurr, decimals: 0)) \(SupportedCurrencies.symbol(for: wishlistCurr)))" : formattedBase
+        let formattedSaved = CurrencyFormatter.format(value: convertedSaved, currency: displayCurr, decimals: 2)
+        let formattedRemaining = CurrencyFormatter.format(value: remaining, currency: displayCurr, decimals: 2)
 
         return CustomWishlistInfo(
             name: name,
             price: convertedPrice,
             formattedPrice: formattedPrice,
+            saved: convertedSaved,
+            formattedSaved: formattedSaved,
+            remaining: remaining,
+            formattedRemaining: formattedRemaining,
+            totalAccumulated: totalAccumulated,
             rawPrice: rawPrice,
+            rawSaved: rawSaved,
             rawCurrency: wishlistCurr,
             todayEarned: todayEarned,
-            progressPercent: progress
+            progressPercent: progress,
+            savedPercent: savedPercent,
+            todayPercent: todayPercent
         )
     }
 

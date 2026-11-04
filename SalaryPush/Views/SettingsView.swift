@@ -219,6 +219,19 @@ struct SettingsView: View {
                         .frame(width: 90)
                     }
 
+                    HStack {
+                        Text("已存金额")
+                            .foregroundColor(grayTeal)
+                            .font(.system(size: 11))
+                            .frame(width: 60, alignment: .leading)
+
+                        TextField("已攒本金", value: $settings.customWishlistSaved, format: .number)
+                            .textFieldStyle(.roundedBorder)
+
+                        Stepper("", value: $settings.customWishlistSaved, in: 0...100_000_000, step: 100)
+                            .labelsHidden()
+                    }
+
                     if settings.customWishlistCurrency != settings.displayCurrency {
                         HStack {
                             Text("💡 折合显示币种 (\(settings.displayCurrency)):")
@@ -248,6 +261,13 @@ struct SettingsView: View {
                             settings.salaryAmount = (settings.salaryAmount / 12.0).rounded()
                         }
                     }
+
+                    Picker("", selection: $settings.salaryTaxMode) {
+                        ForEach(SalaryTaxMode.allCases, id: \.self) { mode in
+                            Text(mode.label(lang: settings.appLanguage)).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
 
                     HStack {
                         Text(settings.salaryInputMode == .monthly ? "月薪" : "年薪")

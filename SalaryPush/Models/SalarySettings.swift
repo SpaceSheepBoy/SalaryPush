@@ -92,6 +92,23 @@ public enum SalaryInputMode: String, CaseIterable {
     }
 }
 
+// MARK: - Salary Tax Base (Brut vs Net)
+
+public enum SalaryTaxMode: String, CaseIterable {
+    case brut = "brut"
+    case net = "net"
+
+    func label(lang: AppLanguage) -> String {
+        switch lang {
+        case .zh: return self == .brut ? "税前毛薪 (Brut)" : "税后到手 (Net)"
+        case .fr: return self == .brut ? "Salaire Brut (Brut)" : "Salaire Net (Net)"
+        case .de: return self == .brut ? "Brutto" : "Netto"
+        case .ja: return self == .brut ? "額面 (税込)" : "手取り (Net)"
+        case .en: return self == .brut ? "Gross (Brut)" : "Net (Take-home)"
+        }
+    }
+}
+
 // MARK: - Observable Settings Model Backed by UserDefaults
 
 final class SalarySettings: ObservableObject {
@@ -130,6 +147,7 @@ final class SalarySettings: ObservableObject {
 
     // MARK: - Salary
     @AppStorage("salaryInputMode") var salaryInputMode: SalaryInputMode = .monthly
+    @AppStorage("salaryTaxMode") var salaryTaxMode: SalaryTaxMode = .brut
     @AppStorage("salaryAmount") var salaryAmount: Double = 8000 // 真实中国中位数月薪 ~¥8,000
     @AppStorage("salaryCurrency") var salaryCurrency: String = "CNY"
     @AppStorage("displayCurrency") var displayCurrency: String = "CNY"
@@ -161,6 +179,7 @@ final class SalarySettings: ObservableObject {
     @AppStorage("paydayDay") var paydayDay: Int = 0 // 0 = 月底最后一天 (默认)
     @AppStorage("customWishlistName") var customWishlistName: String = "PS5 游戏机 (光驱版)"
     @AppStorage("customWishlistPrice") var customWishlistPrice: Double = 3599.0
+    @AppStorage("customWishlistSaved") var customWishlistSaved: Double = 0.0
     @AppStorage("customWishlistCurrency") var customWishlistCurrency: String = "CNY"
     @AppStorage("hasCompletedSetup") var hasCompletedSetup: Bool = false
 

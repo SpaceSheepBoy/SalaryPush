@@ -162,29 +162,35 @@ struct DashboardView: View {
                             .buttonStyle(.plain)
                         }
 
-                        // Progress Bar
+                        // Multi-segment Progress Bar: Saved (Mint) + Today (Gold)
                         GeometryReader { geo in
                             ZStack(alignment: .leading) {
                                 Capsule()
                                     .fill(Color.white.opacity(0.08))
                                     .frame(height: 5)
+                                // Segment 1: Saved
                                 Capsule()
                                     .fill(mintBadgeColor)
-                                    .frame(width: max(4, geo.size.width * CGFloat(min(1.0, wishlist.progressPercent / 100.0))), height: 5)
+                                    .frame(width: max(0, geo.size.width * CGFloat(min(1.0, wishlist.savedPercent / 100.0))), height: 5)
+                                // Segment 2: Today (offset by saved)
+                                Capsule()
+                                    .fill(Color(red: 0.98, green: 0.75, blue: 0.14))
+                                    .frame(width: max(0, geo.size.width * CGFloat(min(1.0, wishlist.todayPercent / 100.0))), height: 5)
+                                    .offset(x: geo.size.width * CGFloat(min(1.0, wishlist.savedPercent / 100.0)))
                             }
                         }
                         .frame(height: 5)
 
                         HStack {
-                            Text("\(L10n.todayContribution(settings.appLanguage)) \(formatBenefitAmount(wishlist.todayEarned)) / \(L10n.targetLabel(settings.appLanguage)) \(wishlist.formattedPrice)")
-                                .font(.system(size: 9))
+                            Text("\(wishlist.saved > 0 ? "已存 \(wishlist.formattedSaved) + " : "")今日 \(formatBenefitAmount(wishlist.todayEarned)) / 目标 \(wishlist.formattedPrice)\(wishlist.remaining > 0 ? " (余 \(wishlist.formattedRemaining))" : "")")
+                                .font(.system(size: 8.5))
                                 .foregroundColor(grayTeal)
 
                             Spacer()
 
                             let daysSuffix = settings.appLanguage == .zh ? "天" : (settings.appLanguage == .fr ? "j" : (settings.appLanguage == .de ? "T" : (settings.appLanguage == .ja ? "日" : "d")))
                             Text("💰 \(L10n.paydayLabel(settings.appLanguage)): \(payday.displayLabel) (\(payday.days) \(daysSuffix))")
-                                .font(.system(size: 9, weight: .medium))
+                                .font(.system(size: 8.5, weight: .medium))
                                 .foregroundColor(Color(red: 0.95, green: 0.77, blue: 0.25))
                         }
                     }
