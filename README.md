@@ -54,7 +54,7 @@
   - 扣除所有法定节假日、带薪年假与 RTT 天数，精确算出每年实际工作日——假期越多，分摊到每个具体出勤日的日薪和时薪就越高！
 - 🎁 **丰富实物激励与大件心愿单**：
   - **日常小确幸**：星巴克拿铁、奶茶、豪华午餐、IMAX电影票、10L汽油、Steam 3A游戏、泰式SPA。
-  - **大件心愿进度**：AirPods Pro、iPhone 16 Pro、度假机票、自定义心愿单，实时展示今天赚出的百分比进度条！
+  - **大件心愿进度**：AirPods Pro、iPhone 18 Pro、度假机票、自定义心愿单，实时展示今天赚出的百分比进度条！
 - 🪟 **迷你悬浮便签模式 (Mini Mode)**：
   - 一键收起为极简小巧便签，悬浮在屏幕边角，工作时丝毫不遮挡视线。
 - ⌨️ **ESC 老板键 (Stealth Mode)**：
@@ -80,7 +80,7 @@
   - Subtracts statutory holidays and vacation from total working days—having more holidays mathematically increases your hourly and daily earnings!
 - 🎁 **Real-World Rewards & Milestone Wishlists**:
   - Daily rewards: Starbucks Latte, Boba Tea, Deluxe Lunch, IMAX Movie Tickets, 10L Gasoline, Steam 3A Games, Thai Massage.
-  - Big goals with progress bars: AirPods Pro, iPhone 16 Pro, Flight Tickets, Custom Wishlist.
+  - Big goals with progress bars: AirPods Pro, iPhone 18 Pro, Flight Tickets, Custom Wishlist.
 - 🪟 **Mini Floating Widget Mode**:
   - One-click collapse into a compact widget showing only earnings and rewards, ideal for keeping in a screen corner while working.
 - ⌨️ **Stealth Boss Key (ESC)**:

@@ -95,25 +95,41 @@ struct DashboardView: View {
 
                     // 3. Social Benefit / Housing Fund Row
                     let benefit = calculator.benefitSummary(at: currentDate)
-                    HStack(alignment: .firstTextBaseline) {
-                        HStack(spacing: 5) {
-                            Text(benefit.title)
-                                .font(.system(size: 11, weight: .regular))
-                                .foregroundColor(grayTeal)
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack(alignment: .firstTextBaseline) {
+                            HStack(spacing: 5) {
+                                Text(benefit.title)
+                                    .font(.system(size: 11, weight: .regular))
+                                    .foregroundColor(grayTeal)
 
-                            Text(formatBenefitAmount(benefit.todayAccumulated))
-                                .font(.system(size: 13, weight: .bold, design: .rounded))
-                                .foregroundColor(cyanBenefitColor)
-                                .monospacedDigit()
+                                Text(formatBenefitAmount(benefit.todayAccumulated))
+                                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                                    .foregroundColor(cyanBenefitColor)
+                                    .monospacedDigit()
+                            }
+
+                            Spacer()
+
+                            Text(benefit.formulaText)
+                                .font(.system(size: 10, weight: .regular))
+                                .foregroundColor(grayTeal.opacity(0.85))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                         }
 
-                        Spacer()
+                        let clarificationText: String = {
+                            switch settings.appLanguage {
+                            case .zh: return "💡 员工个人代扣社保（上方今日已赚已扣除，为实发到手，无需再减）"
+                            case .fr: return "💡 Part salariale déduite (Le montant en haut est déjà votre Net réel)"
+                            default: return "💡 Employee deductions (Top amount is already Net take-home, no extra deduction)"
+                            }
+                        }()
 
-                        Text(benefit.formulaText)
-                            .font(.system(size: 10, weight: .regular))
-                            .foregroundColor(grayTeal.opacity(0.85))
+                        Text(clarificationText)
+                            .font(.system(size: 9))
+                            .foregroundColor(grayTeal.opacity(0.7))
                             .lineLimit(1)
-                            .minimumScaleFactor(0.75)
+                            .minimumScaleFactor(0.8)
                     }
                     .padding(.top, -3)
 

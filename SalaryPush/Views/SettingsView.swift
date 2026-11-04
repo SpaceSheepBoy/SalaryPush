@@ -225,11 +225,8 @@ struct SettingsView: View {
                             .font(.system(size: 11))
                             .frame(width: 60, alignment: .leading)
 
-                        TextField("已攒本金", value: $settings.customWishlistSaved, format: .number)
+                        TextField("已攒本金 (例如 1000)", value: $settings.customWishlistSaved, format: .number)
                             .textFieldStyle(.roundedBorder)
-
-                        Stepper("", value: $settings.customWishlistSaved, in: 0...100_000_000, step: 100)
-                            .labelsHidden()
                     }
 
                     if settings.customWishlistCurrency != settings.displayCurrency {
