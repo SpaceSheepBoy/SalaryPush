@@ -1,0 +1,368 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0F054C4D9825720CC2EB0F2D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333ADDAE6DC986A4D181782B /* Extensions.swift */; };
+		247D85DFB01870BDAE39EDB2 /* SalaryPushApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C160A3356DC3090B5BD615 /* SalaryPushApp.swift */; };
+		258D896C1CBCCEB772439880 /* StatsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352143809D8E0070A45F55A2 /* StatsRowView.swift */; };
+		2B66D4A23F53A11C43BFD4E3 /* WorkProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF060C91EF6923D4617435 /* WorkProgressView.swift */; };
+		2F6107491751B5DA82D86292 /* ExchangeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C95B95BDD2FE8C2D1480D /* ExchangeRateService.swift */; };
+		30C3FFE6DCE4944D6A261A6D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC0BCA6C456E06CC84BE592 /* SettingsView.swift */; };
+		491762F7FFD0BE492F3550CC /* EarningsCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32993A0DC2C33EE0EC9D6DD /* EarningsCounterView.swift */; };
+		5A9F4AA7B51C55A39125E581 /* EarningsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C4E067528E5C7D17A1B41 /* EarningsCalculator.swift */; };
+		B53829C34F77864AAB17C761 /* SalarySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AF50CB164BF6ED2A49AB95 /* SalarySettings.swift */; };
+		BA01540733AA1E65CA2F704A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2D7015E6DE01461A6F4371 /* DashboardView.swift */; };
+		D46419A1E5C4328E8614EFD1 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9BF3250889325DCB40DD38 /* CountdownView.swift */; };
+		F74538F647D309E454AF6997 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3007AA3C2123FD89082CA3B /* Constants.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		001C4E067528E5C7D17A1B41 /* EarningsCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningsCalculator.swift; sourceTree = "<group>"; };
+		2CC0BCA6C456E06CC84BE592 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		32FCE47B9FAD012489EA268F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		333ADDAE6DC986A4D181782B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		352143809D8E0070A45F55A2 /* StatsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsRowView.swift; sourceTree = "<group>"; };
+		57CF060C91EF6923D4617435 /* WorkProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkProgressView.swift; sourceTree = "<group>"; };
+		A32993A0DC2C33EE0EC9D6DD /* EarningsCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningsCounterView.swift; sourceTree = "<group>"; };
+		AE9BF3250889325DCB40DD38 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
+		C28D42B5CFCB612C20E1B408 /* SalaryPush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalaryPush.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC8C95B95BDD2FE8C2D1480D /* ExchangeRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateService.swift; sourceTree = "<group>"; };
+		D9AF50CB164BF6ED2A49AB95 /* SalarySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalarySettings.swift; sourceTree = "<group>"; };
+		E41CF00A85C36BCD3920FB07 /* SalaryPush.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SalaryPush.entitlements; sourceTree = "<group>"; };
+		F2C160A3356DC3090B5BD615 /* SalaryPushApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalaryPushApp.swift; sourceTree = "<group>"; };
+		F3007AA3C2123FD89082CA3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FC2D7015E6DE01461A6F4371 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A26837C3A63BC82E2354843 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AE9BF3250889325DCB40DD38 /* CountdownView.swift */,
+				FC2D7015E6DE01461A6F4371 /* DashboardView.swift */,
+				A32993A0DC2C33EE0EC9D6DD /* EarningsCounterView.swift */,
+				2CC0BCA6C456E06CC84BE592 /* SettingsView.swift */,
+				352143809D8E0070A45F55A2 /* StatsRowView.swift */,
+				57CF060C91EF6923D4617435 /* WorkProgressView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		10AE58F0A44AF4DE36EE7B32 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F3007AA3C2123FD89082CA3B /* Constants.swift */,
+				333ADDAE6DC986A4D181782B /* Extensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1F13A417D1C5819BE58AE1EE = {
+			isa = PBXGroup;
+			children = (
+				5DC91407D0F191E76D734C2F /* SalaryPush */,
+				8152CCFE921B6F32D7242C81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4B4CD4098AB99AFB0A43190A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				001C4E067528E5C7D17A1B41 /* EarningsCalculator.swift */,
+				CC8C95B95BDD2FE8C2D1480D /* ExchangeRateService.swift */,
+				D9AF50CB164BF6ED2A49AB95 /* SalarySettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5DC91407D0F191E76D734C2F /* SalaryPush */ = {
+			isa = PBXGroup;
+			children = (
+				32FCE47B9FAD012489EA268F /* Info.plist */,
+				E41CF00A85C36BCD3920FB07 /* SalaryPush.entitlements */,
+				F2C160A3356DC3090B5BD615 /* SalaryPushApp.swift */,
+				4B4CD4098AB99AFB0A43190A /* Models */,
+				10AE58F0A44AF4DE36EE7B32 /* Utilities */,
+				0A26837C3A63BC82E2354843 /* Views */,
+			);
+			path = SalaryPush;
+			sourceTree = "<group>";
+		};
+		8152CCFE921B6F32D7242C81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C28D42B5CFCB612C20E1B408 /* SalaryPush.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9B55A7758BC270742D5FE30F /* SalaryPush */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E46FC6B89FAC4A788BE283FB /* Build configuration list for PBXNativeTarget "SalaryPush" */;
+			buildPhases = (
+				711E70A7E7D6649491C892D9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SalaryPush;
+			packageProductDependencies = (
+			);
+			productName = SalaryPush;
+			productReference = C28D42B5CFCB612C20E1B408 /* SalaryPush.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18F6CE3E3ADAB84CA1EF389A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 0E90314819C37C2B56CD0725 /* Build configuration list for PBXProject "SalaryPush" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1F13A417D1C5819BE58AE1EE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8152CCFE921B6F32D7242C81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9B55A7758BC270742D5FE30F /* SalaryPush */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		711E70A7E7D6649491C892D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F74538F647D309E454AF6997 /* Constants.swift in Sources */,
+				D46419A1E5C4328E8614EFD1 /* CountdownView.swift in Sources */,
+				BA01540733AA1E65CA2F704A /* DashboardView.swift in Sources */,
+				5A9F4AA7B51C55A39125E581 /* EarningsCalculator.swift in Sources */,
+				491762F7FFD0BE492F3550CC /* EarningsCounterView.swift in Sources */,
+				2F6107491751B5DA82D86292 /* ExchangeRateService.swift in Sources */,
+				0F054C4D9825720CC2EB0F2D /* Extensions.swift in Sources */,
+				247D85DFB01870BDAE39EDB2 /* SalaryPushApp.swift in Sources */,
+				B53829C34F77864AAB17C761 /* SalarySettings.swift in Sources */,
+				30C3FFE6DCE4944D6A261A6D /* SettingsView.swift in Sources */,
+				258D896C1CBCCEB772439880 /* StatsRowView.swift in Sources */,
+				2B66D4A23F53A11C43BFD4E3 /* WorkProgressView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3AEEB08EB1AEF6CB6C6BF6FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		7950BB63AC2BD7948429E501 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		935D2160684FF0BEF7A8B3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = SalaryPush/SalaryPush.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SalaryPush/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.salarypush;
+				PRODUCT_NAME = SalaryPush;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		DD0ADDD9175AAEDB12AD2B6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = SalaryPush/SalaryPush.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SalaryPush/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.salarypush;
+				PRODUCT_NAME = SalaryPush;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0E90314819C37C2B56CD0725 /* Build configuration list for PBXProject "SalaryPush" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AEEB08EB1AEF6CB6C6BF6FF /* Debug */,
+				7950BB63AC2BD7948429E501 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E46FC6B89FAC4A788BE283FB /* Build configuration list for PBXNativeTarget "SalaryPush" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD0ADDD9175AAEDB12AD2B6D /* Debug */,
+				935D2160684FF0BEF7A8B3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18F6CE3E3ADAB84CA1EF389A /* Project object */;
+}

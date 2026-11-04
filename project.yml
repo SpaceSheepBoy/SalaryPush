@@ -1,0 +1,40 @@
+name: SalaryPush
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    GENERATE_INFOPLIST_FILE: false
+
+targets:
+  SalaryPush:
+    type: application
+    platform: macOS
+    sources:
+      - SalaryPush
+    info:
+      path: SalaryPush/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.salarypush
+        PRODUCT_NAME: SalaryPush
+        INFOPLIST_FILE: SalaryPush/Info.plist
+        GENERATE_INFOPLIST_FILE: false
+        SWIFT_VERSION: "5"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: false
+        CODE_SIGN_ENTITLEMENTS: ""
+        ENABLE_HARDENED_RUNTIME: false
+        COMBINE_HIDPI_IMAGES: true
+    entitlements:
+      path: SalaryPush/SalaryPush.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+        com.apple.security.network.client: true
